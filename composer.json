@@ -1,0 +1,32 @@
+{
+  "name": "alcodo/powerimage",
+  "description": "Laravel Package to create a dynamic image handler",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "image",
+    "dynamic",
+    "laravel"
+  ],
+  "homepage": "https://github.com/alcodo/powerimage",
+  "authors": [
+    {
+      "name": "Alexej Kloos",
+      "email": "alexejkloos@gmail.com",
+      "homepage": "http://alcodo.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "laravel/framework": "~5.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alcodo\\PowerImage\\": ""
+    }
+  },
+  "minimum-stability": "dev"
+}
