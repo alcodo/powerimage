@@ -18,6 +18,7 @@
     }
   ],
   "require": {
+    "approached/laravel-image-optimizer": "1.0.0",
     "laravel/framework": "~5.1"
   },
   "require-dev": {
