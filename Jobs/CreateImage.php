@@ -3,6 +3,7 @@
 namespace Alcodo\PowerImage\Jobs;
 
 use App\Jobs\Job;
+use Cocur\Slugify\Slugify;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -26,18 +27,8 @@ class CreateImage extends Job implements SelfHandling
     public function __construct(UploadedFile $image, $filename = null)
     {
         $this->image = $image;
-
-        // filename
         $this->extension = $this->image->getClientOriginalExtension();
-
-        if (is_null($filename)) {
-            $filename = $this->image->getClientOriginalName();
-        }
-
-        // TODO slugify
-        // https://github.com/cocur/slugify
-        $this->filename = $filename;
-
+        $this->filename = $this->getFilename($filename);
     }
 
     /**
@@ -57,6 +48,9 @@ class CreateImage extends Job implements SelfHandling
 
     /**
      * Generates a filename and check that file is not exists
+     *
+     * @param int $i
+     * @return string
      */
     private function getCompleteFilename($i = 0)
     {
@@ -76,5 +70,23 @@ class CreateImage extends Job implements SelfHandling
         }
 
         return $completeFilename;
+    }
+
+    /**
+     * Return the filename which is passed or get from file
+     * Filename is slug
+     *
+     * @param $filename
+     * @return string
+     */
+    private function getFilename($filename)
+    {
+        if (empty($filename)) {
+            // use filename from uploaded file
+            $filename = str_replace('.' . $this->extension, '', $this->image->getClientOriginalName());
+        }
+
+        $slugify = new Slugify();
+        return $slugify->slugify($filename);
     }
 }
