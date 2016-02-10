@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class CreateImage extends Job implements SelfHandling
 {
 
-    const UploadDirectory = 'uploads/images/';
+    const UploadDirectory = '/uploads/images/';
 
     protected $image;
     protected $filename;
