@@ -3,6 +3,7 @@
 namespace Alcodo\PowerImage\Jobs;
 
 use App\Jobs\Job;
+use Approached\LaravelImageOptimizer\ImageOptimizer;
 use Cocur\Slugify\Slugify;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\File;
@@ -17,18 +18,27 @@ class CreateImage extends Job implements SelfHandling
     protected $image;
     protected $filename;
     protected $extension;
+    protected $folder;
 
     /**
      * Create a new job instance.
      *
      * @param UploadedFile $image
-     * @param null $filename
+     * @param null $filename (Without fileextension)
+     * @param null $folder (Format: 'example/')
      */
-    public function __construct(UploadedFile $image, $filename = null)
+    public function __construct(UploadedFile $image, $filename = null, $folder = null)
     {
+
         $this->image = $image;
         $this->extension = $this->image->getClientOriginalExtension();
         $this->filename = $this->getFilename($filename);
+
+        if(is_null($folder)){
+            $this->folder= '';
+        }else{
+            $this->folder= $folder;
+        }
     }
 
     /**
@@ -39,7 +49,12 @@ class CreateImage extends Job implements SelfHandling
     public function handle()
     {
         $filename = $this->getCompleteFilename();
-        $absoulteFilename = self::UploadDirectory . $filename;
+        $absoulteFilename = self::UploadDirectory . $this->folder . $filename;
+
+        // optimize (overwrite)
+        $opt = new ImageOptimizer();
+        $opt->optimizeImage($this->image->getClientOriginalName());
+
 
         // save
         Storage::put($absoulteFilename, File::get($this->image));
@@ -63,7 +78,7 @@ class CreateImage extends Job implements SelfHandling
 
         $completeFilename = $filename . '.' . $this->extension;
 
-        if (Storage::exists(self::UploadDirectory . $completeFilename)) {
+        if (Storage::exists(self::UploadDirectory . $this->folder . $completeFilename)) {
             // file exists
             $i++;
             return $this->getCompleteFilename($i);

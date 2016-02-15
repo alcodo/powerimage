@@ -1,5 +1,5 @@
 <?php
 
-Route::group(['namespace' => 'Alcodo\PowerImage\Controllers'], function () {
-    Route::get('/uploads/images/{image}', 'ImageController@show');
-});
+Route::get('/uploads/images/{path}', function (\League\Glide\Server $server, $path) {
+    return $server->outputImage($path, Input::query());
+})->where('path', '.+');
