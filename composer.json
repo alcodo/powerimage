@@ -4,6 +4,8 @@
   "type": "library",
   "license": "MIT",
   "keywords": [
+    "glide",
+    "http",
     "image",
     "dynamic",
     "laravel"
@@ -18,8 +20,9 @@
     }
   ],
   "require": {
-    "approached/laravel-image-optimizer": "1.0.0",
     "laravel/framework": "~5.1",
+    "league/glide": "^1.0",
+    "approached/laravel-image-optimizer": "1.0.0",
     "cocur/slugify": "^1.4"
   },
   "require-dev": {
