@@ -30,6 +30,14 @@ class DeleteImage extends Job implements SelfHandling
      */
     public function handle()
     {
+        $cacheImagePath = str_replace(CreateImage::UploadDirectory, CreateImage::UploadDirectory . '.cache/', $this->path) . '/';
+
+        // delete glide cache
+        if (Storage::exists($cacheImagePath)) {
+            Storage::deleteDirectory($cacheImagePath);
+        }
+
+        // delete original image
         if (Storage::exists($this->path)) {
             Storage::delete($this->path);
             return true;
