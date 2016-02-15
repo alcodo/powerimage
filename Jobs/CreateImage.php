@@ -3,6 +3,7 @@
 namespace Alcodo\PowerImage\Jobs;
 
 use App\Jobs\Job;
+use Approached\LaravelImageOptimizer\ImageOptimizer;
 use Cocur\Slugify\Slugify;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\File;
@@ -28,6 +29,7 @@ class CreateImage extends Job implements SelfHandling
      */
     public function __construct(UploadedFile $image, $filename = null, $folder = null)
     {
+
         $this->image = $image;
         $this->extension = $this->image->getClientOriginalExtension();
         $this->filename = $this->getFilename($filename);
@@ -48,6 +50,11 @@ class CreateImage extends Job implements SelfHandling
     {
         $filename = $this->getCompleteFilename();
         $absoulteFilename = self::UploadDirectory . $this->folder . $filename;
+
+        // optimize (overwrite)
+        $opt = new ImageOptimizer();
+        $opt->optimizeImage($this->image->getClientOriginalName());
+
 
         // save
         Storage::put($absoulteFilename, File::get($this->image));
