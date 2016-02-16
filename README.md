@@ -32,7 +32,7 @@ After updating composer, add the ServiceProvider to the providers array in confi
 
 ## Usage
 
-1. Add image via fileupload in controller:
+*1*. Add image via fileupload in controller:
 ```php
     use DispatchesJobs;
 
@@ -45,12 +45,12 @@ After updating composer, add the ServiceProvider to the providers array in confi
 ```
 Make sure that you use **DispatchesJobs**!
 
-2.Now you have follow filepath ''/uploads/images/gallery/example.jpg'' for the image.
+*2*. Now you have follow filepath `/uploads/images/gallery/example.jpg` for the image.
 You can have now easy on-demand image manipulation via http [quick-reference](http://glide.thephpleague.com/1.0/api/quick-reference/).
 
-Example:  ''/uploads/images/gallery/example.jpg?w=500&blur=5''
+Example:  `/uploads/images/gallery/example.jpg?w=500&blur=5`
 
-3. Delete image
+*3*. Delete image
 ```php
     use DispatchesJobs;
 
