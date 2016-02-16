@@ -14,12 +14,12 @@ It contains two packages:
 
 Install packages for image optimizing:
 ```bash
-$ sudo apt-get install optipng jpegoptim
+sudo apt-get install optipng jpegoptim
 ```
 
 Add packages:
 ```bash
-$ composer require alcodo/powerimage
+composer require alcodo/powerimage
 ```
 
 After updating composer, add the ServiceProvider to the providers array in config/app.php
