@@ -10,6 +10,7 @@ class ServiceProvider extends Provider
      */
     public function register()
     {
+        $this->app->register('Approached\LaravelImageOptimizer\ServiceProvider');
     }
 
     public function boot()
