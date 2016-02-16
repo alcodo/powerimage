@@ -62,6 +62,10 @@ Example:  `/uploads/images/gallery/example.jpg?w=500&blur=5`
 ```
 All cached files will be deleted too.
 
+## Extension
+
+- Gallery  [alcodo/gallery](https://github.com/alcodo/gallery)
+
 ## License
 
 The MIT License (MIT). Please see [LICENSE](https://github.com/alcodo/powerimage/blob/master/LICENSE) for more information.
