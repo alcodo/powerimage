@@ -53,7 +53,7 @@ class CreateImage extends Job implements SelfHandling
 
         // optimize (overwrite)
         $opt = new ImageOptimizer();
-        $opt->optimizeImage($this->image->getClientOriginalName());
+        $opt->optimizeImage($this->image->getRealPath(), $this->image->getClientOriginalExtension());
 
 
         // save
