@@ -46,15 +46,13 @@ class CreateImage extends Job implements SelfHandling
      *
      * @return void
      */
-    public function handle()
+    public function handle(ImageOptimizer $imageOptimizer)
     {
         $filename = $this->getCompleteFilename();
         $absoulteFilename = self::UploadDirectory . $this->folder . $filename;
 
-        // optimize (overwrite)
-        $opt = new ImageOptimizer();
-        $opt->optimizeImage($this->image->getRealPath(), $this->image->getClientOriginalExtension());
-
+        // optimize (overwrite image file)
+        $imageOptimizer->optimizeUploadedImageFile($this->image);
 
         // save
         Storage::put($absoulteFilename, File::get($this->image));
