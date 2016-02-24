@@ -22,7 +22,7 @@
   "require": {
     "laravel/framework": "~5.1",
     "league/glide": "^1.0",
-    "approached/laravel-image-optimizer": "1.0.0",
+    "approached/laravel-image-optimizer": "dev-master",
     "cocur/slugify": "^1.4"
   },
   "require-dev": {
