@@ -76,31 +76,10 @@ class DownloadAndCreateImage extends Job implements SelfHandling
         }
 
         // save file in cache
-        var_dump(sys_get_temp_dir());
         $temp_file = tempnam(sys_get_temp_dir(), $filename);
-//        $temp_file = sys_get_temp_dir() . $filename;
-
-
-        $bla = file_put_contents($temp_file, $binaryData);
-//        var_dump($bla);
-
-        $tempfile_parts = pathinfo($temp_file);
-
-//        var_dump($tempfile_parts);
-//        $tmpHandle = tmpfile();
-//        $metaDatas = stream_get_meta_data($temp_file);
-//        $tmpFilename = $metaDatas['uri'];
-//
-//
-//        var_dump($tmpFilename);
-//        fclose($temp_file);
 
         // return UploadedFile instance
-//        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($tempfile_parts['dirname'] . '/', $filename);
-        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($temp_file, $filename, 'image/png', '92361');
-
-//        dd($file);
-
+        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($temp_file, $filename);
         return $file;
     }
 }
