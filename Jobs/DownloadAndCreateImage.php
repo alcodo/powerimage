@@ -58,7 +58,26 @@ class DownloadAndCreateImage extends Job implements SelfHandling
         );
     }
 
-    private function getUploadedFile()
+    protected function getUploadedFile()
+    {
+        $binaryData = $this->downloadFile();
+        $filename = $this->getFilenameWithExtension();
+
+        // create cache file
+        $temp_file = tempnam(sys_get_temp_dir(), $filename);
+        file_put_contents($temp_file, $binaryData);
+
+        // return UploadedFile instance
+        return new \Symfony\Component\HttpFoundation\File\UploadedFile($temp_file, $filename);
+    }
+
+    /**
+     * Download a file and return binary data
+     *
+     * @return mixed
+     * @throws DownloadFileException
+     */
+    private function downloadFile()
     {
         // download file
         $binaryData = file_get_contents($this->url);
@@ -67,19 +86,27 @@ class DownloadAndCreateImage extends Job implements SelfHandling
             throw new DownloadFileException();
         }
 
-        // get filename
-        if(empty($this->filename) || empty($this->fileextension)){
+        return $binaryData;
+    }
+
+    /**
+     * Filename with extension
+     * Example: dog.png
+     *
+     * @return string
+     */
+    private function getFilenameWithExtension()
+    {
+        if (empty($this->filename) || empty($this->fileextension)) {
+
+            // use filename from url
             $file_parts = pathinfo($this->url);
-            $filename = $file_parts['basename'] . '.' . $file_parts['extension'];
-        }else{
-            $filename = $this->filename . '.' . $this->fileextension;
+            return $file_parts['basename'] . '.' . $file_parts['extension'];
+
+        } else {
+
+            return $this->filename . '.' . $this->fileextension;
+
         }
-
-        // save file in cache
-        $temp_file = tempnam(sys_get_temp_dir(), $filename);
-
-        // return UploadedFile instance
-        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($temp_file, $filename);
-        return $file;
     }
 }
