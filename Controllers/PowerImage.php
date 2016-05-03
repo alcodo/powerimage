@@ -1,5 +1,8 @@
 <?php namespace Alcodo\PowerImage\Controllers;
 
+use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Input;
+
 class PowerImage extends Controller
 {
 
