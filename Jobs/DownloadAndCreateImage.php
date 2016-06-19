@@ -29,7 +29,7 @@ class DownloadAndCreateImage extends Job implements SelfHandling
     private $fileextension;
 
     /**
-     * Download image and create a powerimage
+     * Download image and create a powerimage.
      * @param $url
      * @param null $filename
      * @param null $folder
@@ -72,7 +72,7 @@ class DownloadAndCreateImage extends Job implements SelfHandling
     }
 
     /**
-     * Download a file and return binary data
+     * Download a file and return binary data.
      *
      * @return mixed
      * @throws DownloadFileException
@@ -91,7 +91,7 @@ class DownloadAndCreateImage extends Job implements SelfHandling
 
     /**
      * Filename with extension
-     * Example: dog.png
+     * Example: dog.png.
      *
      * @return string
      */
@@ -101,12 +101,10 @@ class DownloadAndCreateImage extends Job implements SelfHandling
 
             // use filename from url
             $file_parts = pathinfo($this->url);
-            return $file_parts['basename'] . '.' . $file_parts['extension'];
 
+            return $file_parts['basename'].'.'.$file_parts['extension'];
         } else {
-
-            return $this->filename . '.' . $this->fileextension;
-
+            return $this->filename.'.'.$this->fileextension;
         }
     }
 }

@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DeleteImage extends Job implements SelfHandling
 {
-
     protected $path;
 
     /**
@@ -30,7 +29,7 @@ class DeleteImage extends Job implements SelfHandling
      */
     public function handle()
     {
-        $cacheImagePath = str_replace(CreateImage::UploadDirectory, CreateImage::UploadDirectory . '.cache/', $this->path) . '/';
+        $cacheImagePath = str_replace(CreateImage::UploadDirectory, CreateImage::UploadDirectory.'.cache/', $this->path).'/';
 
         // delete glide cache
         if (Storage::exists($cacheImagePath)) {
@@ -40,8 +39,10 @@ class DeleteImage extends Job implements SelfHandling
         // delete original image
         if (Storage::exists($this->path)) {
             Storage::delete($this->path);
+
             return true;
         }
+
         return false;
     }
 }
