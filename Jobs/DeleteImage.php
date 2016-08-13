@@ -29,7 +29,7 @@ class DeleteImage extends Job implements SelfHandling
      */
     public function handle()
     {
-        $cacheImagePath = str_replace(CreateImage::UploadDirectory, 
+        $cacheImagePath = str_replace(CreateImage::UploadDirectory,
                 CreateImage::UploadDirectory.'.cache/', $this->path).'/';
 
         // TODO
