@@ -9,7 +9,7 @@ class CreateTest extends TestCase
     {
         parent::setUp();
 
-        $this->originalFile = __DIR__ . '/files/hochregallager.jpg';
+        $this->originalFile = __DIR__.'/files/hochregallager.jpg';
     }
 
     public function tearDown()
