@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Storage;
 
 class DeleteTest extends TestCase
 {
-
     /**
      * @test
      */
@@ -32,7 +31,7 @@ class DeleteTest extends TestCase
         $imageCachePath = $this->callPrivateOrProtectedMethod(
             $deleter,
             'getImageCachePath',
-            array()
+            []
         );
 
         $this->assertEquals('/powerimage/.cache/hochregallager.jpg/', $imageCachePath);
@@ -48,7 +47,7 @@ class DeleteTest extends TestCase
         $imageCachePath = $this->callPrivateOrProtectedMethod(
             $deleter,
             'getImageCachePath',
-            array()
+            []
         );
 
         $this->assertEquals('/powerimage/.cache/example/hochregallager.jpg/', $imageCachePath);
@@ -61,16 +60,21 @@ class DeleteTest extends TestCase
     {
         // generate resize image
         $filepath = $this->getImage();
+<<<<<<< HEAD
         $url = $filepath . '?w=200';
         try{
             // Cannot modify header information - headers already sent by
             $this->call('GET', $url);
         }catch (\Exception $e){
         }
+=======
+        $url = $filepath.'?w=200';
+        $this->call('GET', $url);
+>>>>>>> 6e61fcba4f6a78d360c102f6795975c838d13f31
 
         $files = Storage::allFiles('powerimage');
         $this->assertCount(2, $files);
-        
+
         // delete
         $deleter = new DeleteImage($filepath);
         $result = $deleter->handle();
@@ -79,5 +83,4 @@ class DeleteTest extends TestCase
         $files = Storage::allFiles('powerimage');
         $this->assertCount(0, $files);
     }
-
 }

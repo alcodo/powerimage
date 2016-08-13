@@ -8,7 +8,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $this->originalFile = __DIR__ . '/files/hochregallager.jpg';
+        $this->originalFile = __DIR__.'/files/hochregallager.jpg';
     }
 
     public function tearDown()
@@ -27,6 +27,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         $class = new \ReflectionClass($obj);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
+
         return $method->invokeArgs($obj, $args);
     }
 
@@ -37,6 +38,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         // convert and save
         $image = new CreateImage($file);
         $filepath = $image->handle();
+
         return $filepath;
     }
 
@@ -49,5 +51,4 @@ class TestCase extends Orchestra\Testbench\TestCase
             app('Approached\LaravelImageOptimizer\ImageOptimizer')
         );
     }
-
 }

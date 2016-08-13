@@ -1,12 +1,10 @@
 <?php
 
-use Alcodo\PowerImage\Jobs\CreateImage;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ControllerTest extends TestCase
 {
-
     public function tearDown()
     {
         Storage::deleteDirectory('powerimage');
@@ -39,7 +37,7 @@ class ControllerTest extends TestCase
     public function it_allows_create_resized_image()
     {
         $filepath = $this->getImage();
-        $url = $filepath . '?w=200';
+        $url = $filepath.'?w=200';
 
         try {
             // Cannot modify header information - headers already sent by
