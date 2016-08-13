@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class CreateImage extends Job implements SelfHandling
 {
-    const UploadDirectory = '/uploads/images/';
+    const UploadDirectory = 'powerimage';
 
     protected $image;
     protected $filename;
@@ -31,12 +31,7 @@ class CreateImage extends Job implements SelfHandling
         $this->image = $image;
         $this->extension = $this->image->getClientOriginalExtension();
         $this->filename = $this->getFilename($filename);
-
-        if (is_null($folder)) {
-            $this->folder = '';
-        } else {
-            $this->folder = $folder;
-        }
+        $this->folder = $folder;
     }
 
     /**
@@ -44,18 +39,14 @@ class CreateImage extends Job implements SelfHandling
      *
      * @return void
      */
-    public function handle(ImageOptimizer $imageOptimizer)
+    public function handle()
     {
-        $filename = $this->getCompleteFilename();
-        $absoulteFilename = self::UploadDirectory.$this->folder.$filename;
-
-        // optimize (overwrite image file)
-        $imageOptimizer->optimizeUploadedImageFile($this->image);
+        $filepath = $this->getFilepath();
 
         // save
-        Storage::put($absoulteFilename, File::get($this->image));
+        Storage::put($filepath, File::get($this->image));
 
-        return $absoulteFilename;
+        return $filepath;
     }
 
     /**
@@ -64,19 +55,19 @@ class CreateImage extends Job implements SelfHandling
      * @param int $i
      * @return string
      */
-    private function getCompleteFilename($i = 0)
+    protected function getCompleteFilename($i = 0)
     {
         $filename = $this->filename;
 
         // interrupt filename
         if ($i !== 0) {
-            $filename .= '_'.$i;
+            $filename .= '_' . $i;
         }
 
-        $completeFilename = $filename.'.'.$this->extension;
+        $completeFilename = $filename . '.' . $this->extension;
 
-        if (Storage::exists(self::UploadDirectory.$this->folder.$completeFilename)) {
-            // file exists
+        // file exists
+        if (Storage::exists($this->getFolder() . $completeFilename)) {
             $i++;
 
             return $this->getCompleteFilename($i);
@@ -92,15 +83,35 @@ class CreateImage extends Job implements SelfHandling
      * @param $filename
      * @return string
      */
-    private function getFilename($filename)
+    protected function getFilename($filename)
     {
         if (empty($filename)) {
             // use filename from uploaded file
-            $filename = str_replace('.'.$this->extension, '', $this->image->getClientOriginalName());
+            $filename = str_replace('.' . $this->extension, '', $this->image->getClientOriginalName());
         }
 
         $slugify = new Slugify();
 
         return $slugify->slugify($filename);
     }
+
+    protected function getFilepath()
+    {
+        return $this->getFolder() . $this->getCompleteFilename();
+    }
+
+    protected function getFolder()
+    {
+        if (is_null($this->folder) || empty($this->folder)) {
+            $this->folder = '';
+        } else {
+            // remove front and last slash
+            $this->folder = ltrim($this->folder, '/');
+            $this->folder = rtrim($this->folder, "/");
+        }
+
+        return '/' . self::UploadDirectory . '/' . $this->folder . '/';
+    }
+
+
 }

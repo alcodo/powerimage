@@ -4,7 +4,7 @@ namespace Alcodo\PowerImage;
 
 use Illuminate\Support\ServiceProvider as Provider;
 
-class ServiceProvider extends Provider
+class PowerImageServiceProvider extends Provider
 {
     /**
      * Register the service provider.
@@ -23,8 +23,8 @@ class ServiceProvider extends Provider
             return \League\Glide\ServerFactory::create([
                 'source' => $filesystemDriver,
                 'cache' => $filesystemDriver,
-                'source_path_prefix' => 'uploads/images',
-                'cache_path_prefix' => 'uploads/images/.cache',
+                'source_path_prefix' => 'powerimage',
+                'cache_path_prefix' => 'powerimage/.cache',
                 'base_url' => 'img',
             ]);
         });
