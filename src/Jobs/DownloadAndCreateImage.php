@@ -3,12 +3,13 @@
 namespace Alcodo\PowerImage\Jobs;
 
 use Alcodo\PowerImage\Exceptions\DownloadFileException;
-use App\Jobs\Job;
-use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Bus\Queueable;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class DownloadAndCreateImage extends Job implements SelfHandling
+class DownloadAndCreateImage
 {
+    use Queueable;
+
     use DispatchesJobs;
 
     /**
