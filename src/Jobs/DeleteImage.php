@@ -4,7 +4,6 @@ namespace Alcodo\PowerImage\Jobs;
 
 use App\Jobs\Job;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -56,10 +55,10 @@ class DeleteImage
     {
         $cacheImagePath = str_replace(
             CreateImage::UploadDirectory,
-            CreateImage::UploadDirectory . '/.cache',
+            CreateImage::UploadDirectory.'/.cache',
             $this->path
         );
 
-        return $cacheImagePath . '/';
+        return $cacheImagePath.'/';
     }
 }

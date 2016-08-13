@@ -1,11 +1,9 @@
 <?php
 
-use Alcodo\PowerImage\Jobs\CreateImage;
 use Illuminate\Support\Facades\Storage;
 
 class ControllerTest extends TestCase
 {
-
     public function tearDown()
     {
         Storage::deleteDirectory('powerimage');
@@ -32,7 +30,7 @@ class ControllerTest extends TestCase
     public function it_allows_create_resized_image()
     {
         $filepath = $this->getImage();
-        $url = $filepath . '?w=200';
+        $url = $filepath.'?w=200';
 
         $this->assertEquals(
             500, // Cannot modify header information - headers already sent by

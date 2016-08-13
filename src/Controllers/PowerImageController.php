@@ -40,7 +40,7 @@ class PowerImageController extends Controller
 
         $filesystem = app('filesystem');
 
-        if ($filesystem->exists($path) === false){
+        if ($filesystem->exists($path) === false) {
             abort(404);
         }
 //        dd($filesystem->exists($path));
