@@ -28,7 +28,6 @@ class ControllerTest extends TestCase
             );
         } catch (NotFoundHttpException $e) {
         }
-
     }
 
     /**
