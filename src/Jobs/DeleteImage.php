@@ -3,12 +3,15 @@
 namespace Alcodo\PowerImage\Jobs;
 
 use App\Jobs\Job;
+use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class DeleteImage extends Job implements SelfHandling
+class DeleteImage
 {
+    use Queueable;
+
     protected $path;
 
     /**
@@ -29,16 +32,11 @@ class DeleteImage extends Job implements SelfHandling
      */
     public function handle()
     {
-        $cacheImagePath = str_replace(CreateImage::UploadDirectory,
-                CreateImage::UploadDirectory.'.cache/', $this->path).'/';
-
-        // TODO
-        debug($cacheImagePath);
-        dd($cacheImagePath);
+        $imageCachePath = $this->getImageCachePath();
 
         // delete glide cache
-        if (Storage::exists($cacheImagePath)) {
-            Storage::deleteDirectory($cacheImagePath);
+        if (Storage::exists($imageCachePath)) {
+            Storage::deleteDirectory($imageCachePath);
         }
 
         // delete original image
@@ -49,5 +47,19 @@ class DeleteImage extends Job implements SelfHandling
         }
 
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getImageCachePath()
+    {
+        $cacheImagePath = str_replace(
+            CreateImage::UploadDirectory,
+            CreateImage::UploadDirectory . '/.cache',
+            $this->path
+        );
+
+        return $cacheImagePath . '/';
     }
 }
