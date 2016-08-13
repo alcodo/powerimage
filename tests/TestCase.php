@@ -1,7 +1,22 @@
 <?php
 
+use Alcodo\PowerImage\Jobs\CreateImage;
+
 class TestCase extends Orchestra\Testbench\TestCase
 {
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->originalFile = __DIR__ . '/files/hochregallager.jpg';
+    }
+
+    public function tearDown()
+    {
+        Storage::deleteDirectory('powerimage');
+        parent::tearDown();
+    }
+
     protected function getPackageProviders($app)
     {
         return ['Alcodo\PowerImage\PowerImageServiceProvider'];
@@ -13,6 +28,16 @@ class TestCase extends Orchestra\Testbench\TestCase
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         return $method->invokeArgs($obj, $args);
+    }
+
+    public function getImage()
+    {
+        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->originalFile, 'hochregallager.jpg');
+
+        // convert and save
+        $image = new CreateImage($file);
+        $filepath = $image->handle();
+        return $filepath;
     }
 
     /**

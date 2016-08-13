@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Response;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 
-class PowerImage extends Controller
+class PowerImageController extends Controller
 {
     public function show($path, \League\Glide\Server $server)
     {
@@ -39,6 +39,11 @@ class PowerImage extends Controller
         $path = $server->getSourcePath($path);
 
         $filesystem = app('filesystem');
+
+        if ($filesystem->exists($path) === false){
+            abort(404);
+        }
+//        dd($filesystem->exists($path));
 
         $content = $filesystem->get($path);
 

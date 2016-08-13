@@ -1,23 +1,10 @@
 <?php
 
-use Alcodo\PowerImage\Jobs\CreateImage;
 use Alcodo\PowerImage\Jobs\DeleteImage;
 use Illuminate\Support\Facades\Storage;
 
 class DeleteTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->originalFile = __DIR__ . '/files/hochregallager.jpg';
-    }
-
-    public function tearDown()
-    {
-        Storage::deleteDirectory('powerimage');
-        parent::tearDown();
-    }
 
     /**
      * @test
@@ -67,14 +54,26 @@ class DeleteTest extends TestCase
         $this->assertEquals('/powerimage/.cache/example/hochregallager.jpg/', $imageCachePath);
     }
 
-
-    public function getImage()
+    /**
+     * @test
+     */
+    public function it_removes_cache_files()
     {
-        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->originalFile, 'hochregallager.jpg');
+        // generate resize image
+        $filepath = $this->getImage();
+        $url = $filepath . '?w=200';
+        $this->call('GET', $url);
 
-        // convert and save
-        $image = new CreateImage($file);
-        $filepath = $image->handle();
-        return $filepath;
+        $files = Storage::allFiles('powerimage');
+        $this->assertCount(2, $files);
+        
+        // delete
+        $deleter = new DeleteImage($filepath);
+        $result = $deleter->handle();
+        $this->assertTrue($result);
+
+        $files = Storage::allFiles('powerimage');
+        $this->assertCount(0, $files);
     }
+
 }
