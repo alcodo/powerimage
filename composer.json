@@ -20,7 +20,7 @@
     }
   ],
   "require": {
-    "laravel/framework": "~5.0",
+    "illuminate/support": "5.1.*|5.2.*",
     "league/glide": "^1.0",
     "approached/laravel-image-optimizer": "^2.0",
     "cocur/slugify": "*"
@@ -32,9 +32,11 @@
   "autoload": {
     "psr-4": {
       "Alcodo\\PowerImage\\": "src/"
-    },
+    }
+  },
+  "autoload-dev": {
     "classmap": [
-      "tests"
+      "tests/TestCase.php"
     ]
   },
   "minimum-stability": "dev"

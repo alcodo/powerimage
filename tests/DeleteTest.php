@@ -60,17 +60,14 @@ class DeleteTest extends TestCase
     {
         // generate resize image
         $filepath = $this->getImage();
-<<<<<<< HEAD
+
         $url = $filepath . '?w=200';
         try{
             // Cannot modify header information - headers already sent by
             $this->call('GET', $url);
         }catch (\Exception $e){
         }
-=======
-        $url = $filepath.'?w=200';
-        $this->call('GET', $url);
->>>>>>> 6e61fcba4f6a78d360c102f6795975c838d13f31
+
 
         $files = Storage::allFiles('powerimage');
         $this->assertCount(2, $files);
