@@ -61,11 +61,11 @@ class DeleteTest extends TestCase
         // generate resize image
         $filepath = $this->getImage();
 
-        $url = $filepath . '?w=200';
-        try{
+        $url = $filepath.'?w=200';
+        try {
             // Cannot modify header information - headers already sent by
             $this->call('GET', $url);
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
         }
 
 
