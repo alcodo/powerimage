@@ -4,10 +4,11 @@ namespace Alcodo\PowerImage\Jobs;
 
 use App\Jobs\Job;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class DeleteImage
+class DeleteImage implements SelfHandling
 {
     use Queueable;
 

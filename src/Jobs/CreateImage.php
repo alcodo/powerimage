@@ -4,11 +4,12 @@ namespace Alcodo\PowerImage\Jobs;
 
 use Cocur\Slugify\Slugify;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class CreateImage
+class CreateImage implements SelfHandling
 {
     use Queueable;
 

@@ -4,9 +4,10 @@ namespace Alcodo\PowerImage\Jobs;
 
 use Alcodo\PowerImage\Exceptions\DownloadFileException;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class DownloadAndCreateImage
+class DownloadAndCreateImage implements SelfHandling
 {
     use Queueable;
 
