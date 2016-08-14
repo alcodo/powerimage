@@ -23,12 +23,11 @@
     "illuminate/support": "~5.1",
     "league/glide": "^1.0",
     "approached/laravel-image-optimizer": "^2.0",
-    "cocur/slugify": "*",
-    "orchestra/testbench": "3.2.*"
+    "cocur/slugify": "*"
   },
   "require-dev": {
-    
-    "phpunit/phpunit": "~4.0"
+    "phpunit/phpunit": "~4.0",
+    "orchestra/testbench": "~3.0"
   },
   "autoload": {
     "psr-4": {
