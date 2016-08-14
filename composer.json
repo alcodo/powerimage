@@ -20,14 +20,15 @@
     }
   ],
   "require": {
-    "illuminate/support": "5.1.*|5.2.*",
+    "illuminate/support": "~5.1",
     "league/glide": "^1.0",
     "approached/laravel-image-optimizer": "^2.0",
-    "cocur/slugify": "*"
+    "cocur/slugify": "*",
+    "orchestra/testbench": "3.2.*"
   },
   "require-dev": {
-    "phpunit/phpunit": "~4.0",
-    "orchestra/testbench": "~3.0"
+    
+    "phpunit/phpunit": "~4.0"
   },
   "autoload": {
     "psr-4": {
