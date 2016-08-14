@@ -19,15 +19,6 @@ class ControllerTest extends TestCase
         $filepath = $this->getImage();
 
         $this->visit($filepath)->assertResponseOk();
-
-        try {
-            // Cannot modify header information - headers already sent by
-            $this->assertEquals(
-                404,
-                $this->call('GET', 'powerimage/hoch.jpg')->getStatusCode()
-            );
-        } catch (NotFoundHttpException $e) {
-        }
     }
 
     /**
@@ -55,4 +46,25 @@ class ControllerTest extends TestCase
             $files[0]
         );
     }
+
+    /**
+     * @test
+     */
+    public function it_return_notfound_error_on_image()
+    {
+        $this->setExpectedException(NotFoundHttpException::class);
+
+        $this->call('GET', '/powerimage/check.jpg');
+    }
+
+    /**
+     * @test
+     */
+    public function it_return_notfound_error_on_resized_image()
+    {
+        $this->setExpectedException(NotFoundHttpException::class);
+
+        $this->call('GET', '/powerimage/hochregallager_not_exists.jpg?w=200');
+    }
+
 }
