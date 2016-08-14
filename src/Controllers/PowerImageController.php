@@ -54,7 +54,7 @@ class PowerImageController extends Controller
         $headers['Content-Type'] = $filesystem->mimeType($path);
         $headers['Content-Length'] = $filesystem->getSize($path);
         $headers['Cache-Control'] = 'max-age=31536000, public';
-        $headers['Expires'] = date_create('+1 years')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['Expires'] = date_create('+1 years')->format('D, d M Y H:i:s').' GMT';
 
         return Response::make($content, 200, $headers);
     }
@@ -67,6 +67,6 @@ class PowerImageController extends Controller
         /** @var Local $local */
         $local = $filesystem->getAdapter();
 
-        return $local->getPathPrefix() . $path;
+        return $local->getPathPrefix().$path;
     }
 }

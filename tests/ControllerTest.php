@@ -66,5 +66,4 @@ class ControllerTest extends TestCase
 
         $this->call('GET', '/powerimage/hochregallager_not_exists.jpg?w=200');
     }
-
 }
