@@ -66,7 +66,7 @@ class PowerImageController extends Controller
         $headers['Content-Length'] = $file->getSize($path);
         $headers['Cache-Control'] = 'max-age=108000, public';
         $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s').' GMT';
-        $headers['PowerImage'] = 'Compressed';
+        $headers['PowerImage'] = 'Original';
 
         return Response::make($file->read($path), 200, $headers);
     }
