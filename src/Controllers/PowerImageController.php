@@ -35,28 +35,40 @@ class PowerImageController extends Controller
             $optimizer->optimizeImage($absoluteFilepath, pathinfo($path, PATHINFO_EXTENSION));
         }
 
-        return $server->outputImage($path, Input::query());
+        // resize image exists
+        if (!isset($cacheFile)) {
+            $cacheFile = $server->makeImage($path, $params);
+        }
+
+        $file = $server->getCache();
+
+        $headers = [];
+        $headers['Content-Type'] = $file->getMimetype($cacheFile);
+        $headers['Content-Length'] = $file->getSize($cacheFile);
+        $headers['Cache-Control'] = 'max-age=108000, public';
+        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['PowerImage'] = 'Compressed';
+
+        return Response::make($file->read($cacheFile), 200, $headers);
     }
 
     protected function showOriginalImage($path, \League\Glide\Server $server)
     {
         $path = $server->getSourcePath($path);
+        $file = $server->getCache();
 
-        $filesystem = app('filesystem');
-
-        if ($filesystem->exists($path) === false) {
+        if ($file->has($path) === false) {
             abort(404);
         }
 
-        $content = $filesystem->get($path);
-
         $headers = [];
-        $headers['Content-Type'] = $filesystem->mimeType($path);
-        $headers['Content-Length'] = $filesystem->getSize($path);
-        $headers['Cache-Control'] = 'max-age=31536000, public';
-        $headers['Expires'] = date_create('+1 years')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['Content-Type'] = $file->getMimetype($path);
+        $headers['Content-Length'] = $file->getSize($path);
+        $headers['Cache-Control'] = 'max-age=108000, public';
+        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['PowerImage'] = 'Compressed';
 
-        return Response::make($content, 200, $headers);
+        return Response::make($file->read($path), 200, $headers);
     }
 
     protected function getAbsoulteFilepath($path, \League\Glide\Server $server)
