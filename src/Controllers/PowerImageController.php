@@ -33,7 +33,7 @@ class PowerImageController extends Controller
         $headers['Content-Type'] = $file->getMimetype($cacheFile);
         $headers['Content-Length'] = $file->getSize($cacheFile);
         $headers['Cache-Control'] = 'max-age=108000, public';
-        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s').' GMT';
         $headers['PowerImage'] = 'Compressed';
 
         return Response::make($file->read($cacheFile), 200, $headers);
@@ -53,14 +53,14 @@ class PowerImageController extends Controller
         $headers['Content-Type'] = $file->getMimetype($filepath);
         $headers['Content-Length'] = $file->getSize($filepath);
         $headers['Cache-Control'] = 'max-age=324000, public';
-        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s').' GMT';
         $headers['PowerImage'] = 'Original';
 
         return Response::make($file->read($filepath), 200, $headers);
     }
 
     /**
-     * Returns a absoulte filepath from path
+     * Returns a absoulte filepath from path.
      *
      * @param $filepath
      * @param \League\Glide\Server $server
@@ -74,11 +74,11 @@ class PowerImageController extends Controller
         /** @var Local $local */
         $local = $filesystem->getAdapter();
 
-        return $local->getPathPrefix() . $filepath;
+        return $local->getPathPrefix().$filepath;
     }
 
     /**
-     * Image will be resize and optimized
+     * Image will be resize and optimized.
      *
      * @param $filepath
      * @param $params
