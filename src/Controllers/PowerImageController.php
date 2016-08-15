@@ -36,7 +36,7 @@ class PowerImageController extends Controller
         }
 
         // resize image exists
-        if (!isset($cacheFile)) {
+        if (! isset($cacheFile)) {
             $cacheFile = $server->makeImage($path, $params);
         }
 
@@ -46,7 +46,7 @@ class PowerImageController extends Controller
         $headers['Content-Type'] = $file->getMimetype($cacheFile);
         $headers['Content-Length'] = $file->getSize($cacheFile);
         $headers['Cache-Control'] = 'max-age=108000, public';
-        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s').' GMT';
         $headers['PowerImage'] = 'Compressed';
 
         return Response::make($file->read($cacheFile), 200, $headers);
@@ -65,7 +65,7 @@ class PowerImageController extends Controller
         $headers['Content-Type'] = $file->getMimetype($path);
         $headers['Content-Length'] = $file->getSize($path);
         $headers['Cache-Control'] = 'max-age=108000, public';
-        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['Expires'] = date_create('+30 days')->format('D, d M Y H:i:s').' GMT';
         $headers['PowerImage'] = 'Compressed';
 
         return Response::make($file->read($path), 200, $headers);
@@ -79,6 +79,6 @@ class PowerImageController extends Controller
         /** @var Local $local */
         $local = $filesystem->getAdapter();
 
-        return $local->getPathPrefix() . $path;
+        return $local->getPathPrefix().$path;
     }
 }
