@@ -10,8 +10,7 @@ use League\Flysystem\Filesystem;
 
 class PowerImageController extends Controller
 {
-
-//    public function show($directory, $type, $filename, $fileextension){
+    //    public function show($directory, $type, $filename, $fileextension){
 //        $filepath = $directory . $type . $filename . $fileextension;
 //        dd($filepath);
 //    }
