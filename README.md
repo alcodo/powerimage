@@ -1,10 +1,23 @@
+**Package is still in development!!!**
+
 # Powerimage
 Powerimage is a dynamic image handler for laravel.
 
-The workflow is really easy:
-- Create a image (image will be optimize)
-- Now you have easy on-demand image manipulation like /uploads/images/foobar.jpg?w=200 (filecache will be used)
-- Delete image if you don't need more
+After uploading a image, the image will be available under follow source:
+```example.com/powerimage/gallery/cat.jpg``` (Original image)
+```example.com/powerimage/gallery/optimize/cat.jpg``` (Lossless optimize image)
+```example.com/powerimage/gallery/optimize/w=200&h=200/cat.jpg``` (Resized and optimize image)
+
+OR
+
+```example.com/powerimage/gallery/optimize?w=200&h=200/cat.jpg``` (Resized and optimize image)
+
+OR:
+
+```example.com/powerimage/gallery/original/cat.jpg``` (Original image)
+```example.com/powerimage/gallery/compress/cat.jpg``` (Lossless optimize image)
+```example.com/powerimage/gallery/w=200?h=200/cat.jpg``` (Resized and optimize image)
+
 
 It contains two packages:
 - [approached/laravel-image-optimizer](https://github.com/approached/laravel-image-optimizer)

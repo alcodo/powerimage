@@ -5,4 +5,9 @@ Route::group(['namespace' => 'Alcodo\PowerImage\Controllers'], function () {
         'as' => 'powerimage.show',
         'uses' => 'PowerImageController@show',
     ])->where('filepath', '.+');
+
+//    Route::get('/powerimage/{directory}/{type}/{filename}.{fileextension}', [
+//        'as' => 'powerimage.show',
+//        'uses' => 'PowerImageController@show',
+//    ]);
 });
