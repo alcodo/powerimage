@@ -4,20 +4,13 @@
 Powerimage is a dynamic image handler for laravel.
 
 After uploading a image, the image will be available under follow source:
-```example.com/powerimage/gallery/cat.jpg``` (Original image)
-```example.com/powerimage/gallery/optimize/cat.jpg``` (Lossless optimize image)
-```example.com/powerimage/gallery/optimize/w=200&h=200/cat.jpg``` (Resized and optimize image)
+```example.com/powerimage/gallery/cat.jpg``` (Lossless optimize image)
+```example.com/powerimage/gallery/w_200,h_200/cat.jpg``` (Resized and optimize image)
 
-OR
-
-```example.com/powerimage/gallery/optimize?w=200&h=200/cat.jpg``` (Resized and optimize image)
-
-OR:
-
-```example.com/powerimage/gallery/original/cat.jpg``` (Original image)
-```example.com/powerimage/gallery/compress/cat.jpg``` (Lossless optimize image)
-```example.com/powerimage/gallery/w=200?h=200/cat.jpg``` (Resized and optimize image)
-
+Structure:
+```
+{domain}/powerimage/[prefix]/{imagefile|resize parameter}/[imagefile]
+```
 
 It contains two packages:
 - [approached/laravel-image-optimizer](https://github.com/approached/laravel-image-optimizer)
