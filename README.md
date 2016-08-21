@@ -36,6 +36,15 @@ After updating composer, add the ServiceProvider to the providers array in confi
     ],
 ```
 
+
+Add disk handler in config/filesystems.php
+```php
+'powerimage' => [
+     'driver' => 'local',
+     'root'   => storage_path('powerimage'),
+]
+```
+
 ## Usage
 
 *1*. Add image via fileupload in controller:
