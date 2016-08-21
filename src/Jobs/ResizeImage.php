@@ -24,20 +24,6 @@ class ResizeImage implements SelfHandling
     private $params;
 
     /**
-     * Create a new job instance.
-     *
-     * @param UploadedFile $image
-     * @param null $filename (Without fileextension)
-     * @param null $folder (Format: 'example/')
-     */
-
-    /**
-     * ResizeImage constructor.
-     * @param $image
-     * @param $params
-     */
-
-    /**
      * ResizeImage constructor.
      * @param string $orignalFile
      * @param array $params
@@ -46,6 +32,10 @@ class ResizeImage implements SelfHandling
     {
         $this->orignalFile = $orignalFile;
         $this->params = $params;
+
+        if (Storage::disk('powerimage')->exists($this->orignalFile) === false) {
+            abort(404, 'Original file does not exists');
+        }
     }
 
     /**
@@ -53,80 +43,34 @@ class ResizeImage implements SelfHandling
      *
      * @return void
      */
-    public function handle(ImageOptimizer $imageOptimizer)
+    public function handle()
     {
-        $filepath = $this->getFilepath();
+        $resizedFilepath = $this->getResizeFilepath();
 
-        // optimize (overwrite image file)
-        $imageOptimizer->optimizeUploadedImageFile($this->image);
+        // copy
+        Storage::disk('powerimage')->copy($this->orignalFile, $resizedFilepath);
 
-        // save
-        Storage::put($filepath, File::get($this->image));
+        // resize
+        // TODO
 
-        return $filepath;
+        return $resizedFilepath;
     }
-//
-//    /**
-//     * Generates a filename and check that file is not exists.
-//     *
-//     * @param int $i
-//     * @return string
-//     */
-//    protected function getCompleteFilename($i = 0)
-//    {
-//        $filename = $this->filename;
-//
-//        // interrupt filename
-//        if ($i !== 0) {
-//            $filename .= '_' . $i;
-//        }
-//
-//        $completeFilename = $filename . '.' . $this->extension;
-//
-//        // file exists
-//        if (Storage::exists($this->getFolder() . $completeFilename)) {
-//            $i++;
-//
-//            return $this->getCompleteFilename($i);
-//        }
-//
-//        return $completeFilename;
-//    }
-//
-//    /**
-//     * Return the filename which is passed or get from file
-//     * Filename is slug.
-//     *
-//     * @param $filename
-//     * @return string
-//     */
-//    protected function getFilename($filename)
-//    {
-//        if (empty($filename)) {
-//            // use filename from uploaded file
-//            $filename = str_replace('.' . $this->extension, '', $this->image->getClientOriginalName());
-//        }
-//
-//        $slugify = new Slugify();
-//
-//        return $slugify->slugify($filename);
-//    }
-//
-//    protected function getFilepath()
-//    {
-//        return $this->getFolder() . $this->getCompleteFilename();
-//    }
-//
-//    protected function getFolder()
-//    {
-//        if (is_null($this->folder) || empty($this->folder)) {
-//            return '/' . self::UploadDirectory . '/';
-//        } else {
-//            // remove front and last slash
-//            $this->folder = ltrim($this->folder, '/');
-//            $this->folder = rtrim($this->folder, '/');
-//
-//            return '/' . self::UploadDirectory . '/' . $this->folder . '/';
-//        }
-//    }
+
+    protected function getResizeFilepath()
+    {
+        $file = pathinfo($this->orignalFile);
+        $directory = $file['dirname'];
+
+        return $directory . '/' . $this->getParamsAsString() . '/' . $file['basename'];
+    }
+
+    protected function getParamsAsString()
+    {
+        $paramsWithKeyAndValues = [];
+        foreach ($this->params as $key => $value) {
+            $paramsWithKeyAndValues[] = $key . '_' . $value;
+        }
+
+        return implode(',', $paramsWithKeyAndValues);
+    }
 }
