@@ -2,13 +2,10 @@
 
 namespace Alcodo\PowerImage\Jobs;
 
-use Approached\LaravelImageOptimizer\ImageOptimizer;
-use Cocur\Slugify\Slugify;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ResizeImage implements SelfHandling
 {
@@ -61,14 +58,14 @@ class ResizeImage implements SelfHandling
         $file = pathinfo($this->orignalFile);
         $directory = $file['dirname'];
 
-        return $directory . '/' . $this->getParamsAsString() . '/' . $file['basename'];
+        return $directory.'/'.$this->getParamsAsString().'/'.$file['basename'];
     }
 
     protected function getParamsAsString()
     {
         $paramsWithKeyAndValues = [];
         foreach ($this->params as $key => $value) {
-            $paramsWithKeyAndValues[] = $key . '_' . $value;
+            $paramsWithKeyAndValues[] = $key.'_'.$value;
         }
 
         return implode(',', $paramsWithKeyAndValues);

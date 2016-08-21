@@ -1,7 +1,6 @@
 <?php
 
 Route::group(['namespace' => 'Alcodo\PowerImage\Controllers'], function () {
-
     Route::get('/powerimage/{file}', 'PowerImageController@showFile');
 
     Route::get('/powerimage/{prefix}/{file}', 'PowerImageController@show')->where('prefix', '.+');

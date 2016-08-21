@@ -15,7 +15,7 @@ class PowerImageController extends Controller
 
     public function showFile($file)
     {
-        $absoluteFilename = 'powerimage/' . $file;
+        $absoluteFilename = 'powerimage/'.$file;
 
         if (Storage::disk('powerimage')->exists($absoluteFilename) === false) {
             abort(404);
@@ -26,7 +26,7 @@ class PowerImageController extends Controller
 
     public function show($prefix, $file)
     {
-        $absoluteFilename = 'powerimage/' . $prefix . '/' . $file;
+        $absoluteFilename = 'powerimage/'.$prefix.'/'.$file;
 
         // orignal or resized image already available
         if (Storage::disk('powerimage')->exists($absoluteFilename)) {
@@ -54,7 +54,7 @@ class PowerImageController extends Controller
         $headers['Content-Type'] = Storage::disk('powerimage')->mimeType($file);
         $headers['Content-Length'] = Storage::disk('powerimage')->size($file);
         $headers['Cache-Control'] = 'max-age=7776000, public';
-        $headers['Expires'] = date_create('+90 days')->format('D, d M Y H:i:s') . ' GMT';
+        $headers['Expires'] = date_create('+90 days')->format('D, d M Y H:i:s').' GMT';
         $headers['PowerImage'] = 'Compressed';
 
         return Response::make(Storage::disk('powerimage')->get($file), 200, $headers);

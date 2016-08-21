@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CreateTest extends TestCase
 {
-
     /**
      * @test
      */

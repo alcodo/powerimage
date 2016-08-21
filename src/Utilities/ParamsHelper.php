@@ -4,9 +4,8 @@ namespace Alcodo\PowerImage\Utilities;
 
 class ParamsHelper
 {
-
     /**
-     * It converts a string to params
+     * It converts a string to params.
      *
      * @param $prefix
      * @return array
@@ -23,23 +22,20 @@ class ParamsHelper
 
         $possibleAttributeWithValue = explode(',', $posibleParamString);
 
-        $resultParams = array();
+        $resultParams = [];
 
         foreach ($possibleAttributeWithValue as $attributeWithValue) {
-
             if (strpos($attributeWithValue, '_') !== false) {
                 list($attribute, $value) = explode('_', $attributeWithValue);
                 $resultParams[$attribute] = $value;
             }
-
         }
 
         return $resultParams;
-
     }
 
     /**
-     * Is removes params from string
+     * Is removes params from string.
      *
      * @param string $prefix
      * @return string
@@ -52,6 +48,5 @@ class ParamsHelper
         array_pop($directories);
 
         return implode('/', $directories);
-
     }
 }
