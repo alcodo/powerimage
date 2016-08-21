@@ -8,7 +8,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $this->originalFile = __DIR__.'/files/hochregallager.jpg';
+        $this->originalFile = __DIR__.'/files/example.png';
     }
 
     public function tearDown()
@@ -33,11 +33,12 @@ class TestCase extends Orchestra\Testbench\TestCase
 
     public function getImage()
     {
-        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->originalFile, 'hochregallager.jpg');
+        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->originalFile, 'example.png');
 
         // convert and save
         $image = new CreateImage($file);
-        $filepath = $image->handle();
+        $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
+        $filepath = $image->handle($imageOptimizer);
 
         return $filepath;
     }
