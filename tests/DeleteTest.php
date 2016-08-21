@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Storage;
 
 class DeleteTest extends TestCase
 {
-//    /**
+    //    /**
 //     * @test
 //     */
 //    public function it_allows_create_a_image_without_gallery()

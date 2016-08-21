@@ -1,12 +1,9 @@
 <?php
 
 use Alcodo\PowerImage\Utilities\ParamsHelper;
-use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ParamsTest extends TestCase
 {
-
     /**
      * @test
      */
@@ -15,10 +12,10 @@ class ParamsTest extends TestCase
         $prefix = 'powerimage/gallery/foo/w_200,h_200';
         $params = ParamsHelper::getParamsFromPrefix($prefix);
 
-        $expectedResults = array(
+        $expectedResults = [
             'w' => 200,
             'h' => 200,
-        );
+        ];
 
         $this->assertEquals($expectedResults, $params);
     }
@@ -31,9 +28,9 @@ class ParamsTest extends TestCase
         $prefix = 'powerimage/gallery/foo/h_200';
         $params = ParamsHelper::getParamsFromPrefix($prefix);
 
-        $expectedResults = array(
+        $expectedResults = [
             'h' => 200,
-        );
+        ];
 
         $this->assertEquals($expectedResults, $params);
     }
@@ -46,9 +43,9 @@ class ParamsTest extends TestCase
         $prefix = 'h_200';
         $params = ParamsHelper::getParamsFromPrefix($prefix);
 
-        $expectedResults = array(
+        $expectedResults = [
             'h' => 200,
-        );
+        ];
 
         $this->assertEquals($expectedResults, $params);
     }
@@ -61,5 +58,4 @@ class ParamsTest extends TestCase
         $path = ParamsHelper::getPrefixWithoutParams('/bla/w_200');
         $this->assertEquals('/bla', $path);
     }
-
 }

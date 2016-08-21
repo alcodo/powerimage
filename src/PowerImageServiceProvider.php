@@ -17,7 +17,7 @@ class PowerImageServiceProvider extends Provider
 
     public function boot()
     {
-//        $this->app->singleton('League\Glide\Server', function () {
+        //        $this->app->singleton('League\Glide\Server', function () {
 //            $filesystemDriver = app('filesystem')->getDriver();
 //
 //            return \League\Glide\ServerFactory::create([

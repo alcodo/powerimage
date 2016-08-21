@@ -57,5 +57,4 @@ class ControllerTest extends TestCase
         $this->setExpectedException(NotFoundHttpException::class);
         $this->call('GET', '/powerimage/gallery/2016/08/check.jpg');
     }
-
 }
