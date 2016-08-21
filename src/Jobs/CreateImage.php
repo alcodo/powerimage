@@ -66,13 +66,13 @@ class CreateImage implements SelfHandling
 
         // interrupt filename
         if ($i !== 0) {
-            $filename .= '_' . $i;
+            $filename .= '_'.$i;
         }
 
-        $completeFilename = $filename . '.' . $this->extension;
+        $completeFilename = $filename.'.'.$this->extension;
 
         // file exists
-        if (Storage::exists($this->getFolder() . $completeFilename)) {
+        if (Storage::exists($this->getFolder().$completeFilename)) {
             $i++;
 
             return $this->getCompleteFilename($i);
@@ -92,7 +92,7 @@ class CreateImage implements SelfHandling
     {
         if (empty($filename)) {
             // use filename from uploaded file
-            $filename = str_replace('.' . $this->extension, '', $this->image->getClientOriginalName());
+            $filename = str_replace('.'.$this->extension, '', $this->image->getClientOriginalName());
         }
 
         $slugify = new Slugify();
@@ -102,19 +102,19 @@ class CreateImage implements SelfHandling
 
     protected function getFilepath()
     {
-        return $this->getFolder() . $this->getCompleteFilename();
+        return $this->getFolder().$this->getCompleteFilename();
     }
 
     protected function getFolder()
     {
         if (is_null($this->folder) || empty($this->folder)) {
-            return '/' . self::UploadDirectory . '/';
+            return '/'.self::UploadDirectory.'/';
         } else {
             // remove front and last slash
             $this->folder = ltrim($this->folder, '/');
             $this->folder = rtrim($this->folder, '/');
 
-            return '/' . self::UploadDirectory . '/' . $this->folder . '/';
+            return '/'.self::UploadDirectory.'/'.$this->folder.'/';
         }
     }
 }
