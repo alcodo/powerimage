@@ -35,14 +35,13 @@ class PowerImageController extends Controller
 
         // orignal or resized image already available
         if (Storage::disk('powerimage')->exists($absoluteFilename)) {
-            dd(Storage::disk('powerimage')->get($absoluteFilename));
-            return Storage::disk('powerimage')->get($absoluteFilename);
+            return $this->showImageFile($absoluteFilename);
         }
 
         $params = ParamsHelper::getParamsFromPrefix($prefix);
 
         // original image not available
-        if ($params) {
+        if (empty($params)) {
             abort(404);
         }
 

@@ -55,12 +55,12 @@ class TestCase extends Orchestra\Testbench\TestCase
         return $method->invokeArgs($obj, $args);
     }
 
-    public function getImage()
+    public function getImage($folder = null)
     {
         $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->tempFile, 'example.png');
 
         // convert and save
-        $image = new CreateImage($file);
+        $image = new CreateImage($file, null, $folder);
         $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
         $filepath = $image->handle($imageOptimizer);
 
