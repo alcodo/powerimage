@@ -9,12 +9,17 @@ class CreateTest extends TestCase
     {
         parent::setUp();
 
-        $this->originalFile = __DIR__.'/files/hochregallager.jpg';
+        $exampleFile = __DIR__ . '/files/example.png';
+        $temp_file = sys_get_temp_dir() . '/example.png';
+        copy($exampleFile, $temp_file);
+
+        $this->tempFile = $temp_file;
     }
 
     public function tearDown()
     {
         Storage::deleteDirectory('powerimage');
+        unlink($this->tempFile);
         parent::tearDown();
     }
 
@@ -23,16 +28,21 @@ class CreateTest extends TestCase
      */
     public function it_allows_create_a_image_without_gallery()
     {
-        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->originalFile, 'hochregallager.jpg');
+        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->tempFile, 'hochregallager.png');
+        $fileSizeBefore = filesize($this->tempFile);
 
         // convert and save
         $image = new CreateImage($file);
-        $filepath = $image->handle();
+        $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
+        $filepath = $image->handle($imageOptimizer);
 
-        $this->assertEquals('/powerimage/hochregallager.jpg', $filepath);
+        $this->assertEquals('/powerimage/hochregallager.png', $filepath);
 
         // file exists
         $this->assertTrue(Storage::exists($filepath));
+
+        // file is optimized
+        $this->assertLessThan($fileSizeBefore, Storage::size($filepath), 'Image optimization doesn\'t works');
     }
 
     /**
@@ -40,15 +50,20 @@ class CreateTest extends TestCase
      */
     public function it_allows_create_a_image_with_gallery()
     {
-        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->originalFile, 'regal.jpg');
+        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->tempFile, 'regal.png');
+        $fileSizeBefore = filesize($this->tempFile);
 
         // convert and save
         $image = new CreateImage($file, null, 'galleryFolder');
-        $filepath = $image->handle();
+        $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
+        $filepath = $image->handle($imageOptimizer);
 
-        $this->assertEquals('/powerimage/galleryFolder/regal.jpg', $filepath);
+        $this->assertEquals('/powerimage/galleryFolder/regal.png', $filepath);
 
         // file exists
         $this->assertTrue(Storage::exists($filepath));
+
+        // file is optimized
+        $this->assertLessThan($fileSizeBefore, Storage::size($filepath), 'Image optimization doesn\'t works');
     }
 }
