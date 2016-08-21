@@ -22,10 +22,10 @@ class CreateTest extends TestCase
         $this->assertEquals('/powerimage/hochregallager.png', $filepath);
 
         // file exists
-        $this->assertTrue(Storage::exists($filepath));
+        $this->assertTrue(Storage::disk('powerimage')->exists($filepath));
 
         // file is optimized
-        $this->assertLessThan($fileSizeBefore, Storage::size($filepath), 'Image optimization doesn\'t works');
+        $this->assertLessThan($fileSizeBefore, Storage::disk('powerimage')->size($filepath), 'Image optimization doesn\'t works');
     }
 
     /**
@@ -44,9 +44,9 @@ class CreateTest extends TestCase
         $this->assertEquals('/powerimage/galleryFolder/regal.png', $filepath);
 
         // file exists
-        $this->assertTrue(Storage::exists($filepath));
+        $this->assertTrue(Storage::disk('powerimage')->exists($filepath));
 
         // file is optimized
-        $this->assertLessThan($fileSizeBefore, Storage::size($filepath), 'Image optimization doesn\'t works');
+        $this->assertLessThan($fileSizeBefore, Storage::disk('powerimage')->size($filepath), 'Image optimization doesn\'t works');
     }
 }

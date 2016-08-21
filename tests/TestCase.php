@@ -18,14 +18,32 @@ class TestCase extends Orchestra\Testbench\TestCase
 
     public function tearDown()
     {
-        Storage::deleteDirectory('powerimage');
+        Storage::disk('powerimage')->deleteDirectory('powerimage');
         unlink($this->tempFile);
         parent::tearDown();
     }
 
     protected function getPackageProviders($app)
     {
-        return ['Alcodo\PowerImage\PowerImageServiceProvider'];
+        return [
+            \Alcodo\PowerImage\PowerImageServiceProvider::class
+        ];
+    }
+
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        $fileSystemSettings = [
+            'driver' => 'local',
+            'root' => storage_path('powerimage'),
+        ];
+
+        $app['config']->set('filesystems.disks.powerimage', $fileSystemSettings);
     }
 
     public function callPrivateOrProtectedMethod($obj, $name, array $args)

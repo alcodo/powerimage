@@ -49,7 +49,7 @@ class CreateImage implements SelfHandling
         $imageOptimizer->optimizeUploadedImageFile($this->image);
 
         // save
-        Storage::put($filepath, File::get($this->image));
+        Storage::disk('powerimage')->put($filepath, File::get($this->image));
 
         return $filepath;
     }

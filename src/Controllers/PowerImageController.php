@@ -20,8 +20,8 @@ class PowerImageController extends Controller
     {
         $file = 'powerimage/' . $file;
 
-//        if (Storage::disk('powerimage')->exists($file)) {
-        if (Storage::exists($file) === false) {
+        if (Storage::disk('powerimage')->exists($file) === false) {
+//        if (Storage::exists($file) === false) {
             abort(404);
         }
 
@@ -57,13 +57,13 @@ class PowerImageController extends Controller
 
     protected function showImageFile($file)
     {
-        $headers['Content-Type'] = Storage::mimeType($file);
-        $headers['Content-Length'] = Storage::size($file);
+        $headers['Content-Type'] = Storage::disk('powerimage')->mimeType($file);
+        $headers['Content-Length'] = Storage::disk('powerimage')->size($file);
         $headers['Cache-Control'] = 'max-age=7776000, public';
         $headers['Expires'] = date_create('+90 days')->format('D, d M Y H:i:s') . ' GMT';
         $headers['PowerImage'] = 'Compressed';
 
-        return Response::make(Storage::get($file), 200, $headers);
+        return Response::make(Storage::disk('powerimage')->get($file), 200, $headers);
     }
 
     //    public function show($directory, $type, $filename, $fileextension){
