@@ -9,8 +9,8 @@ class CreateTest extends TestCase
     {
         parent::setUp();
 
-        $exampleFile = __DIR__ . '/files/example.png';
-        $temp_file = sys_get_temp_dir() . '/example.png';
+        $exampleFile = __DIR__.'/files/example.png';
+        $temp_file = sys_get_temp_dir().'/example.png';
         copy($exampleFile, $temp_file);
 
         $this->tempFile = $temp_file;
