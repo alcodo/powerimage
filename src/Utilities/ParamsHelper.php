@@ -11,7 +11,7 @@ class ParamsHelper
      * @param $prefix
      * @return array
      */
-    static public function getParamsFromPrefix($prefix)
+    public static function getParamsFromPrefix($prefix)
     {
         if (empty($prefix)) {
             return [];
@@ -35,6 +35,23 @@ class ParamsHelper
         }
 
         return $resultParams;
+
+    }
+
+    /**
+     * Is removes params from string
+     *
+     * @param string $prefix
+     * @return string
+     */
+    public static function getPrefixWithoutParams($prefix)
+    {
+        $directories = explode('/', $prefix);
+
+        // remove last type of directory
+        array_pop($directories);
+
+        return implode('/', $directories);
 
     }
 }

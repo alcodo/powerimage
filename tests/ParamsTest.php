@@ -53,4 +53,13 @@ class ParamsTest extends TestCase
         $this->assertEquals($expectedResults, $params);
     }
 
+    /**
+     * @test
+     */
+    public function it_get_prefix_without_params()
+    {
+        $path = ParamsHelper::getPrefixWithoutParams('/bla/w_200');
+        $this->assertEquals('/bla', $path);
+    }
+
 }

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ControllerTest extends TestCase
