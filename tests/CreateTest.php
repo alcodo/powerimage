@@ -5,23 +5,6 @@ use Illuminate\Support\Facades\Storage;
 
 class CreateTest extends TestCase
 {
-    public function setUp()
-    {
-        parent::setUp();
-
-        $exampleFile = __DIR__ . '/files/example.png';
-        $temp_file = sys_get_temp_dir() . '/example.png';
-        copy($exampleFile, $temp_file);
-
-        $this->tempFile = $temp_file;
-    }
-
-    public function tearDown()
-    {
-        Storage::deleteDirectory('powerimage');
-        unlink($this->tempFile);
-        parent::tearDown();
-    }
 
     /**
      * @test

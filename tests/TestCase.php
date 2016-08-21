@@ -8,12 +8,18 @@ class TestCase extends Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $this->originalFile = __DIR__.'/files/example.png';
+        $exampleFile = __DIR__ . '/files/example.png';
+
+        $temp_file = sys_get_temp_dir() . '/example.png';
+        copy($exampleFile, $temp_file);
+
+        $this->tempFile = $temp_file;
     }
 
     public function tearDown()
     {
         Storage::deleteDirectory('powerimage');
+        unlink($this->tempFile);
         parent::tearDown();
     }
 
@@ -33,7 +39,7 @@ class TestCase extends Orchestra\Testbench\TestCase
 
     public function getImage()
     {
-        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->originalFile, 'example.png');
+        $file = new \Symfony\Component\HttpFoundation\File\UploadedFile($this->tempFile, 'example.png');
 
         // convert and save
         $image = new CreateImage($file);
