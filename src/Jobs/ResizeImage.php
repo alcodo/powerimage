@@ -2,10 +2,12 @@
 
 namespace Alcodo\PowerImage\Jobs;
 
+use Approached\LaravelImageOptimizer\ImageOptimizer;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use League\Glide\Api\Api;
 
 class ResizeImage implements SelfHandling
 {
@@ -40,15 +42,23 @@ class ResizeImage implements SelfHandling
      *
      * @return void
      */
-    public function handle()
+    public function handle(ImageOptimizer $imageOptimizer)
     {
+        // get
+        $originalFileBinary = Storage::disk('powerimage')->get($this->orignalFile);
+
+        // convert
+        /** @var Api $glideApi */
+        $glideApi = app('GlideApi');
+        $resizeFileBinary = $glideApi->run($originalFileBinary, $this->params);
+
+        // save
         $resizedFilepath = $this->getResizeFilepath();
+        Storage::disk('powerimage')->put($resizedFilepath, $resizeFileBinary);
 
-        // copy
-        Storage::disk('powerimage')->copy($this->orignalFile, $resizedFilepath);
-
-        // resize
+        // optimize (overwrite image file)
         // TODO
+        $imageOptimizer->optimizeImage(storage_path('powerimage' . $resizedFilepath));
 
         return $resizedFilepath;
     }

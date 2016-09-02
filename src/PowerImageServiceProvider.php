@@ -3,6 +3,7 @@
 namespace Alcodo\PowerImage;
 
 use Illuminate\Support\ServiceProvider as Provider;
+use League\Glide\ServerFactory;
 
 class PowerImageServiceProvider extends Provider
 {
@@ -17,20 +18,13 @@ class PowerImageServiceProvider extends Provider
 
     public function boot()
     {
-        //        $this->app->singleton('League\Glide\Server', function () {
-//            $filesystemDriver = app('filesystem')->getDriver();
-//
-//            return \League\Glide\ServerFactory::create([
-//                'source' => $filesystemDriver,
-//                'cache' => $filesystemDriver,
-//                'source_path_prefix' => 'powerimage',
-//                'cache_path_prefix' => 'powerimage/.cache',
-//                'base_url' => 'img',
-//            ]);
-//        });
+        $this->app->singleton('GlideApi', function () {
+            $factory = new ServerFactory([]);
+            return $factory->getApi();
+        });
 
-        if (! $this->app->routesAreCached()) {
-            require __DIR__.'/routes.php';
+        if (!$this->app->routesAreCached()) {
+            require __DIR__ . '/routes.php';
         }
     }
 }
