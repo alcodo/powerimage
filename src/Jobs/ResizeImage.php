@@ -58,16 +58,18 @@ class ResizeImage implements SelfHandling
         $file = pathinfo($this->orignalFile);
         $directory = $file['dirname'];
 
-        return $directory.'/'.$this->getParamsAsString().'/'.$file['basename'];
+        return $directory . '/' . $this->getParamsAsString() . '/' . $file['basename'];
     }
 
+    /**
+     * Converts params to follow syntax:
+     * w_250,h_250
+     *
+     * @return string
+     */
     protected function getParamsAsString()
     {
-        $paramsWithKeyAndValues = [];
-        foreach ($this->params as $key => $value) {
-            $paramsWithKeyAndValues[] = $key.'_'.$value;
-        }
-
-        return implode(',', $paramsWithKeyAndValues);
+        $params = http_build_query($this->params, null, ',');
+        return str_replace('=', '_', $params);
     }
 }
