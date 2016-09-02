@@ -1,5 +1,7 @@
 language: php
 
+sudo: true
+
 php:
   - 5.5
   - 5.6
@@ -16,8 +18,16 @@ matrix:
   - env: LARAVEL_VERSION="5.3.*" TESTBENCH_VERSION="3.3.*"
 
 before_install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y pngquant gifsicle jpegoptim
+  - wget http://de.archive.ubuntu.com/ubuntu/pool/universe/p/pngquant/pngquant_2.5.0-1_amd64.deb
+  - sudo dpkg -i pngquant_2.5.0-1_amd64.deb
+  - wget https://launchpad.net/ubuntu/+archive/primary/+files/gifsicle_1.88-1_amd64.deb
+  - sudo dpkg -i gifsicle_1.88-1_amd64.deb
+  - wget https://launchpad.net/ubuntu/+archive/primary/+files/jpegoptim_1.4.3-1_amd64.deb
+  - sudo dpkg -i jpegoptim_1.4.3-1_amd64.deb
+#  - sudo apt-get install -y pngquant gifsicle jpegoptim (not usable OS is old in travis)
+  - pngquant --version # 2.5.0 (June 2015)
+  - jpegoptim --version # jpegoptim v1.4.3  x86_64-pc-linux-gnu (libjpeg version: 8d  15-Jan-2012)
+  - gifsicle --version # LCDF Gifsicle 1.88
 
 before_script:
   - composer self-update
@@ -25,5 +35,3 @@ before_script:
   - composer install
 
 script: phpunit --coverage-text
-
-sudo: true
