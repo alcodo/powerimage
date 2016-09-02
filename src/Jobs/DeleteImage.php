@@ -32,35 +32,23 @@ class DeleteImage implements SelfHandling
      */
     public function handle()
     {
-        // TODO
-        $imageCachePath = $this->getImageCachePath();
+        $directories = Storage::disk('powerimage')->allDirectories();
 
-        // delete glide cache
-        if (Storage::exists($imageCachePath)) {
-            Storage::deleteDirectory($imageCachePath);
+        // delete resized iamges
+        foreach ($directories as $directory) {
+            $checkPath = $directory . '/' . $this->path;
+            if (Storage::disk('powerimage')->exists($checkPath)) {
+                Storage::disk('powerimage')->delete($checkPath);
+            }
         }
 
         // delete original image
-        if (Storage::exists($this->path)) {
-            Storage::delete($this->path);
+        if (Storage::disk('powerimage')->exists($this->path)) {
+            Storage::disk('powerimage')->delete($this->path);
 
             return true;
         }
 
         return false;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getImageCachePath()
-    {
-        $cacheImagePath = str_replace(
-            CreateImage::UploadDirectory,
-            CreateImage::UploadDirectory.'/.cache',
-            $this->path
-        );
-
-        return $cacheImagePath.'/';
     }
 }
