@@ -2,6 +2,7 @@
 
 namespace Alcodo\PowerImage\Jobs;
 
+use Alcodo\PowerImage\Utilities\UrlHelper;
 use Approached\LaravelImageOptimizer\ImageOptimizer;
 use Cocur\Slugify\Slugify;
 use Illuminate\Bus\Queueable;
@@ -13,8 +14,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class CreateImage implements SelfHandling
 {
     use Queueable;
-
-    const UploadDirectory = 'powerimage';
 
     protected $image;
     protected $filename;
@@ -51,7 +50,7 @@ class CreateImage implements SelfHandling
         // save
         Storage::disk('powerimage')->put($filepath, File::get($this->image));
 
-        return $filepath;
+        return UrlHelper::getPowerImageUrlPath($filepath);
     }
 
     /**
@@ -108,13 +107,13 @@ class CreateImage implements SelfHandling
     protected function getFolder()
     {
         if (is_null($this->folder) || empty($this->folder)) {
-            return '/'.self::UploadDirectory.'/';
+            return '/';
         } else {
             // remove front and last slash
             $this->folder = ltrim($this->folder, '/');
             $this->folder = rtrim($this->folder, '/');
 
-            return '/'.self::UploadDirectory.'/'.$this->folder.'/';
+            return '/'.$this->folder.'/';
         }
     }
 }

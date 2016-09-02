@@ -15,18 +15,16 @@ class PowerImageController extends Controller
 
     public function showFile($file)
     {
-        $absoluteFilename = 'powerimage/'.$file;
-
-        if (Storage::disk('powerimage')->exists($absoluteFilename) === false) {
+        if (Storage::disk('powerimage')->exists($file) === false) {
             abort(404);
         }
 
-        return $this->showImageFile($absoluteFilename);
+        return $this->showImageFile($file);
     }
 
     public function show($prefix, $file)
     {
-        $absoluteFilename = 'powerimage/'.$prefix.'/'.$file;
+        $absoluteFilename = $prefix.'/'.$file;
 
         // orignal or resized image already available
         if (Storage::disk('powerimage')->exists($absoluteFilename)) {

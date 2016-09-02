@@ -32,6 +32,7 @@ class DeleteImage implements SelfHandling
      */
     public function handle()
     {
+        // TODO
         $imageCachePath = $this->getImageCachePath();
 
         // delete glide cache
