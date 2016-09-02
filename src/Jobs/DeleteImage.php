@@ -32,11 +32,22 @@ class DeleteImage implements SelfHandling
      */
     public function handle()
     {
-        $directories = Storage::disk('powerimage')->allDirectories();
+        // get directory path from file
+        $goalDirectory = pathinfo($this->path, PATHINFO_DIRNAME);
+
+        // get all subdirectories
+        $directories = Storage::disk('powerimage')->allDirectories($goalDirectory);
 
         // delete resized iamges
         foreach ($directories as $directory) {
-            $checkPath = $directory . '/' . $this->path;
+            if ($goalDirectory == '.') {
+                // root directory
+                $checkPath = $directory . '/' . $this->path;
+            } else {
+                // subdirectory
+                $checkPath = str_replace($goalDirectory, $directory, $this->path);
+            }
+
             if (Storage::disk('powerimage')->exists($checkPath)) {
                 Storage::disk('powerimage')->delete($checkPath);
             }
