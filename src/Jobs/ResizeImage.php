@@ -64,32 +64,31 @@ class ResizeImage implements SelfHandling
     }
 
     /**
-     * 
-     * 
      * @return string
      */
     protected function getResizeFilepath()
     {
         $file = pathinfo($this->orignalFile);
-        
+
         $directory = $file['dirname'];
-        if($directory == '.'){
+        if ($directory == '.') {
             $directory = '';
         }
         $directory = str_replace('/powerimage', '', $directory);
 
-        return $directory . '/' . $this->getParamsAsString() . '/' . $file['basename'];
+        return $directory.'/'.$this->getParamsAsString().'/'.$file['basename'];
     }
 
     /**
      * Converts params to follow syntax:
-     * w_250,h_250
+     * w_250,h_250.
      *
      * @return string
      */
     protected function getParamsAsString()
     {
         $params = http_build_query($this->params, null, ',');
+
         return str_replace('=', '_', $params);
     }
 }

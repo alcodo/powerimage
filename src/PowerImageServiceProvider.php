@@ -20,11 +20,12 @@ class PowerImageServiceProvider extends Provider
     {
         $this->app->singleton('GlideApi', function () {
             $factory = new ServerFactory([]);
+
             return $factory->getApi();
         });
 
-        if (!$this->app->routesAreCached()) {
-            require __DIR__ . '/routes.php';
+        if (! $this->app->routesAreCached()) {
+            require __DIR__.'/routes.php';
         }
     }
 }
