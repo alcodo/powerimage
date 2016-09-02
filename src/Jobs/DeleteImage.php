@@ -42,7 +42,7 @@ class DeleteImage implements SelfHandling
         foreach ($directories as $directory) {
             if ($goalDirectory == '.') {
                 // root directory
-                $checkPath = $directory . '/' . $this->path;
+                $checkPath = $directory.'/'.$this->path;
             } else {
                 // subdirectory
                 $checkPath = str_replace($goalDirectory, $directory, $this->path);
