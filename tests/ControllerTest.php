@@ -1,6 +1,5 @@
 <?php
 
-
 class ControllerTest extends TestCase
 {
     /**
@@ -29,6 +28,7 @@ class ControllerTest extends TestCase
     {
         $response = $this->call('GET', '/powerimage/check.jpg');
         $this->assertEquals(404, $response->getStatusCode());
+        abort(404);
     }
 
     /**
@@ -57,5 +57,6 @@ class ControllerTest extends TestCase
     {
         $response = $this->call('GET', '/powerimage/gallery/2016/08/check.jpg');
         $this->assertEquals(404, $response->getStatusCode());
+        abort(404);
     }
 }
