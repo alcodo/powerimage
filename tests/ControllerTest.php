@@ -27,8 +27,9 @@ class ControllerTest extends TestCase
      */
     public function it_disallow_get_image()
     {
-        $this->setExpectedException(NotFoundHttpException::class);
-        $this->call('GET', '/powerimage/check.jpg');
+//        $this->setExpectedException(NotFoundHttpException::class);
+        $response = $this->call('GET', '/powerimage/check.jpg');
+        $this->assertEquals(404, $response->getStatusCode());
     }
 
     /**
@@ -54,7 +55,9 @@ class ControllerTest extends TestCase
      */
     public function it_disallow_to_call_the_image_with_a_prefix()
     {
-        $this->setExpectedException(NotFoundHttpException::class);
-        $this->call('GET', '/powerimage/gallery/2016/08/check.jpg');
+//        $this->setExpectedException(NotFoundHttpException::class);
+        $response = $this->call('GET', '/powerimage/gallery/2016/08/check.jpg');
+        $this->assertEquals(404, $response->getStatusCode());
+
     }
 }
