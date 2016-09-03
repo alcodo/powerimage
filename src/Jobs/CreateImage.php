@@ -6,12 +6,12 @@ use Alcodo\PowerImage\Utilities\UrlHelper;
 use Approached\LaravelImageOptimizer\ImageOptimizer;
 use Cocur\Slugify\Slugify;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class CreateImage implements SelfHandling
+class CreateImage implements ShouldQueue
 {
     use Queueable;
 

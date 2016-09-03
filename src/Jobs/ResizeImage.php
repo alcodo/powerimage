@@ -5,11 +5,11 @@ namespace Alcodo\PowerImage\Jobs;
 use Alcodo\PowerImage\Utilities\UrlHelper;
 use Approached\LaravelImageOptimizer\ImageOptimizer;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Storage;
 use League\Glide\Api\Api;
 
-class ResizeImage implements SelfHandling
+class ResizeImage implements ShouldQueue
 {
     use Queueable;
 
