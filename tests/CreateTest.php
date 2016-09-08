@@ -15,7 +15,7 @@ class CreateTest extends TestCase
 
         // convert and save
         $image = new CreateImage($file);
-        $filepath = $this->dispatch($image);
+        $filepath = $image->handle();
 
         $this->assertEquals('/powerimage/hochregallager.png', $filepath);
 
@@ -36,7 +36,7 @@ class CreateTest extends TestCase
 
         // convert and save
         $image = new CreateImage($file, null, 'galleryFolder');
-        $filepath = $this->dispatch($image);
+        $filepath = $image->handle();
 
         $this->assertEquals('/powerimage/galleryFolder/regal.png', $filepath);
 

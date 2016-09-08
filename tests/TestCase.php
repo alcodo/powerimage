@@ -71,7 +71,7 @@ class TestCase extends Orchestra\Testbench\TestCase
 
         // convert and save
         $image = new CreateImage($file, null, $folder);
-        $filepath = $this->dispatch($image);
+        $filepath = $image->handle();
 
         return $filepath;
     }

@@ -4,11 +4,10 @@ namespace Alcodo\PowerImage\Jobs;
 
 use Alcodo\PowerImage\Utilities\UrlHelper;
 use Approached\LaravelImageOptimizer\ImageOptimizer;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\Storage;
 use League\Glide\Api\Api;
 
-class ResizeImage implements SelfHandling
+class ResizeImage
 {
     /**
      * @var string
@@ -39,7 +38,7 @@ class ResizeImage implements SelfHandling
      *
      * @return void
      */
-    public function handle(ImageOptimizer $imageOptimizer)
+    public function handle()
     {
         // get
         $originalFileBinary = Storage::disk('powerimage')->get($this->orignalFile);
@@ -55,6 +54,8 @@ class ResizeImage implements SelfHandling
 
         // optimize (overwrite image file)
         $absoluteResizeFilepath = storage_path('powerimage'.$resizedFilepath);
+        /** @var ImageOptimizer $imageOptimizer */
+        $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
         $imageOptimizer->optimizeImage($absoluteResizeFilepath);
 
         return UrlHelper::getPowerImageUrlPath($resizedFilepath);

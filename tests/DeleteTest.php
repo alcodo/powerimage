@@ -17,17 +17,17 @@ class DeleteTest extends TestCase
             'h' => 200,
         ];
 
-        $ri = new \Alcodo\PowerImage\Jobs\ResizeImage('example.png', [
+        $resizeImage = new \Alcodo\PowerImage\Jobs\ResizeImage('example.png', [
             'w' => 200,
             'h' => 200,
         ]);
-        $this->dispatch($ri);
+        $resizeImage->handle();
 
-        $ri = new \Alcodo\PowerImage\Jobs\ResizeImage('example.png', [
+        $resizeImage = new \Alcodo\PowerImage\Jobs\ResizeImage('example.png', [
             'w' => 300,
             'h' => 300,
         ]);
-        $this->dispatch($ri);
+        $resizeImage->handle();
 
         // files exists
         $this->assertTrue(Storage::disk('powerimage')->exists('example.png'));
@@ -36,7 +36,7 @@ class DeleteTest extends TestCase
 
         // delete
         $deleteJob = new \Alcodo\PowerImage\Jobs\DeleteImage('example.png', $params);
-        $result = $this->dispatch($deleteJob);
+        $result = $deleteJob->handle($deleteJob);
 
         // testing
         $this->assertTrue($result);
@@ -58,17 +58,17 @@ class DeleteTest extends TestCase
             'h' => 200,
         ];
 
-        $ri = new \Alcodo\PowerImage\Jobs\ResizeImage('/girls/are/crazy/example.png', [
+        $resizeImage = new \Alcodo\PowerImage\Jobs\ResizeImage('/girls/are/crazy/example.png', [
             'w' => 200,
             'h' => 200,
         ]);
-        $this->dispatch($ri);
+        $resizeImage->handle();
 
-        $ri = new \Alcodo\PowerImage\Jobs\ResizeImage('/girls/are/crazy/example.png', [
+        $resizeImage = new \Alcodo\PowerImage\Jobs\ResizeImage('/girls/are/crazy/example.png', [
             'w' => 300,
             'h' => 300,
         ]);
-        $this->dispatch($ri);
+        $resizeImage->handle();
 
         // files exists
         $this->assertTrue(Storage::disk('powerimage')->exists('girls/are/crazy/example.png'));
@@ -77,7 +77,7 @@ class DeleteTest extends TestCase
 
         // delete
         $deleteJob = new \Alcodo\PowerImage\Jobs\DeleteImage('girls/are/crazy/example.png', $params);
-        $result = $this->dispatch($deleteJob);
+        $result = $deleteJob->handle($deleteJob);
 
         // testing
         $this->assertTrue($result);

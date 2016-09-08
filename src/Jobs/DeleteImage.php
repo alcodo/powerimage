@@ -2,11 +2,10 @@
 
 namespace Alcodo\PowerImage\Jobs;
 
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class DeleteImage implements SelfHandling
+class DeleteImage
 {
     protected $path;
 

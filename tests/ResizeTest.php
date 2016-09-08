@@ -16,8 +16,8 @@ class ResizeTest extends TestCase
             'h' => 200,
         ];
 
-        $ri = new \Alcodo\PowerImage\Jobs\ResizeImage('example.png', $params);
-        $resizedFilepath = $this->dispatch($ri);
+        $resizeImage = new \Alcodo\PowerImage\Jobs\ResizeImage('example.png', $params);
+        $resizedFilepath = $resizeImage->handle();
 
         $this->assertEquals('/powerimage/w_200,h_200/example.png', $resizedFilepath);
 

@@ -3,15 +3,9 @@
 namespace Alcodo\PowerImage\Jobs;
 
 use Alcodo\PowerImage\Exceptions\DownloadFileException;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 
-class DownloadAndCreateImage implements ShouldQueue
+class DownloadAndCreateImage
 {
-    use Queueable;
-
-    use DispatchesJobs;
 
     /**
      * @var url for image
@@ -51,13 +45,12 @@ class DownloadAndCreateImage implements ShouldQueue
      */
     public function handle()
     {
-        return $this->dispatch(
-            new CreateImage(
-                $this->getUploadedFile(),
-                $this->filename,
-                $this->folder
-            )
+        $image = new CreateImage(
+            $this->getUploadedFile(),
+            $this->filename,
+            $this->folder
         );
+        return $image->handle();
     }
 
     protected function getUploadedFile()
@@ -104,9 +97,9 @@ class DownloadAndCreateImage implements ShouldQueue
             // use filename from url
             $file_parts = pathinfo($this->url);
 
-            return $file_parts['basename'].'.'.$file_parts['extension'];
+            return $file_parts['basename'] . '.' . $file_parts['extension'];
         } else {
-            return $this->filename.'.'.$this->fileextension;
+            return $this->filename . '.' . $this->fileextension;
         }
     }
 }

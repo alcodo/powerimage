@@ -5,12 +5,11 @@ namespace Alcodo\PowerImage\Jobs;
 use Alcodo\PowerImage\Utilities\UrlHelper;
 use Approached\LaravelImageOptimizer\ImageOptimizer;
 use Cocur\Slugify\Slugify;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class CreateImage implements SelfHandling
+class CreateImage
 {
     protected $realPath;
     protected $filename;
@@ -38,14 +37,17 @@ class CreateImage implements SelfHandling
      *
      * @return void
      */
-    public function handle(ImageOptimizer $imageOptimizer)
+    public function handle()
     {
         $filepath = $this->getFilepath();
 
         // optimize (overwrite image file)
+        /** @var ImageOptimizer $imageOptimizer */
+        $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
         $imageOptimizer->optimizeImage($this->realPath);
 
         // save
+
         Storage::disk('powerimage')->put($filepath, File::get($this->realPath));
 
         return UrlHelper::getPowerImageUrlPath($filepath);
