@@ -50,6 +50,7 @@ class TestCase extends Orchestra\Testbench\TestCase
         ];
 
         $app['config']->set('filesystems.disks.powerimage', $fileSystemSettings);
+        $app['config']->set('app.key', '9lLnUPN2eZbZCmtisUatFc6x8t64kL0s');
     }
 
     public function callPrivateOrProtectedMethod($obj, $name, array $args)
