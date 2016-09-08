@@ -115,5 +115,4 @@ class CreateImage implements SelfHandling
             return '/'.$this->folder.'/';
         }
     }
-
 }

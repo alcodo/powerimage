@@ -10,7 +10,6 @@ use League\Glide\Api\Api;
 
 class ResizeImage implements SelfHandling
 {
-
     /**
      * @var string
      */
