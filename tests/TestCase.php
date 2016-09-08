@@ -1,9 +1,12 @@
 <?php
 
 use Alcodo\PowerImage\Jobs\CreateImage;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class TestCase extends Orchestra\Testbench\TestCase
 {
+    use DispatchesJobs;
+
     public function setUp()
     {
         parent::setUp();
@@ -68,8 +71,7 @@ class TestCase extends Orchestra\Testbench\TestCase
 
         // convert and save
         $image = new CreateImage($file, null, $folder);
-        $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
-        $filepath = $image->handle($imageOptimizer);
+        $filepath = $this->dispatch($image);
 
         return $filepath;
     }

@@ -15,8 +15,7 @@ class CreateTest extends TestCase
 
         // convert and save
         $image = new CreateImage($file);
-        $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
-        $filepath = $image->handle($imageOptimizer);
+        $filepath = $this->dispatch($image);
 
         $this->assertEquals('/powerimage/hochregallager.png', $filepath);
 
@@ -37,8 +36,7 @@ class CreateTest extends TestCase
 
         // convert and save
         $image = new CreateImage($file, null, 'galleryFolder');
-        $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
-        $filepath = $image->handle($imageOptimizer);
+        $filepath = $this->dispatch($image);
 
         $this->assertEquals('/powerimage/galleryFolder/regal.png', $filepath);
 
