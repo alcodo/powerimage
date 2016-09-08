@@ -2,14 +2,12 @@
 
 namespace Alcodo\PowerImage\Jobs;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class DeleteImage implements ShouldQueue
+class DeleteImage implements SelfHandling
 {
-    use Queueable;
 
     protected $path;
 
