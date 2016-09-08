@@ -5,20 +5,18 @@ namespace Alcodo\PowerImage\Jobs;
 use Alcodo\PowerImage\Utilities\UrlHelper;
 use Approached\LaravelImageOptimizer\ImageOptimizer;
 use Cocur\Slugify\Slugify;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class CreateImage implements ShouldQueue
+class CreateImage implements SelfHandling
 {
-    use Queueable;
-
-    protected $image;
+    protected $realPath;
     protected $filename;
     protected $extension;
     protected $folder;
+    protected $path;
 
     /**
      * Create a new job instance.
@@ -29,9 +27,9 @@ class CreateImage implements ShouldQueue
      */
     public function __construct(UploadedFile $image, $filename = null, $folder = null)
     {
-        $this->image = $image;
-        $this->extension = $this->image->getClientOriginalExtension();
-        $this->filename = $this->getFilename($filename);
+        $this->realPath = $image->getRealPath();
+        $this->extension = $image->getClientOriginalExtension();
+        $this->filename = $this->getFilename($image, $filename);
         $this->folder = $folder;
     }
 
@@ -45,10 +43,10 @@ class CreateImage implements ShouldQueue
         $filepath = $this->getFilepath();
 
         // optimize (overwrite image file)
-        $imageOptimizer->optimizeUploadedImageFile($this->image);
+        $imageOptimizer->optimizeImage($this->realPath);
 
         // save
-        Storage::disk('powerimage')->put($filepath, File::get($this->image));
+        Storage::disk('powerimage')->put($filepath, File::get($this->realPath));
 
         return UrlHelper::getPowerImageUrlPath($filepath);
     }
@@ -84,14 +82,15 @@ class CreateImage implements ShouldQueue
      * Return the filename which is passed or get from file
      * Filename is slug.
      *
+     * @param UploadedFile $image
      * @param $filename
      * @return string
      */
-    protected function getFilename($filename)
+    protected function getFilename(UploadedFile $image, $filename)
     {
         if (empty($filename)) {
             // use filename from uploaded file
-            $filename = str_replace('.'.$this->extension, '', $this->image->getClientOriginalName());
+            $filename = str_replace('.'.$image->getClientOriginalExtension(), '', $image->getClientOriginalName());
         }
 
         $slugify = new Slugify();
@@ -116,4 +115,5 @@ class CreateImage implements ShouldQueue
             return '/'.$this->folder.'/';
         }
     }
+
 }
