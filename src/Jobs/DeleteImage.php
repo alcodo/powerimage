@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class DeleteImage implements SelfHandling
 {
-
     protected $path;
 
     /**
