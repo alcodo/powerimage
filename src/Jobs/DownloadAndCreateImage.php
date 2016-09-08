@@ -6,7 +6,6 @@ use Alcodo\PowerImage\Exceptions\DownloadFileException;
 
 class DownloadAndCreateImage
 {
-
     /**
      * @var url for image
      */
@@ -50,6 +49,7 @@ class DownloadAndCreateImage
             $this->filename,
             $this->folder
         );
+
         return $image->handle();
     }
 
@@ -97,9 +97,9 @@ class DownloadAndCreateImage
             // use filename from url
             $file_parts = pathinfo($this->url);
 
-            return $file_parts['basename'] . '.' . $file_parts['extension'];
+            return $file_parts['basename'].'.'.$file_parts['extension'];
         } else {
-            return $this->filename . '.' . $this->fileextension;
+            return $this->filename.'.'.$this->fileextension;
         }
     }
 }
