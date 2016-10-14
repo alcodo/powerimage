@@ -44,7 +44,7 @@ class CreateImage
         // optimize (overwrite image file)
         /** @var ImageOptimizer $imageOptimizer */
         $imageOptimizer = app('Approached\LaravelImageOptimizer\ImageOptimizer');
-        $imageOptimizer->optimizeImage($this->realPath);
+        $imageOptimizer->optimizeImage($this->realPath, $this->extension);
 
         // save
 
