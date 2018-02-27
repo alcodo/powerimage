@@ -4,6 +4,7 @@ namespace Alcodo\PowerImage;
 
 use Illuminate\Support\ServiceProvider as Provider;
 use League\Glide\ServerFactory;
+use Alcodo\PowerImage\Handler\PowerImageBuilder;
 
 class PowerImageServiceProvider extends Provider
 {
@@ -23,5 +24,19 @@ class PowerImageServiceProvider extends Provider
 
             return $factory->getApi();
         });
+
+        $this->app->singleton('powerimage', function ($app) {
+            return new PowerImageBuilder();
+        });
     }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+//    public function provides()
+//    {
+//        return ['powerimage'];
+//    }
 }
