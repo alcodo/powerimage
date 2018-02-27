@@ -13,7 +13,7 @@ class PowerImageServiceProvider extends Provider
      */
     public function register()
     {
-        $this->app->register('Approached\LaravelImageOptimizer\ServiceProvider');
+//        $this->app->register('Approached\LaravelImageOptimizer\ServiceProvider');
     }
 
     public function boot()
@@ -23,9 +23,5 @@ class PowerImageServiceProvider extends Provider
 
             return $factory->getApi();
         });
-
-        if (! $this->app->routesAreCached()) {
-            require __DIR__.'/routes.php';
-        }
     }
 }

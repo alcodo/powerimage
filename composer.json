@@ -37,5 +37,11 @@
       "tests/TestCase.php"
     ]
   },
-  "minimum-stability": "dev"
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Alcodo\\PowerImage\\PowerImageServiceProvider"
+      ]
+    },
+    "minimum-stability": "dev"
 }
