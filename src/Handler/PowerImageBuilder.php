@@ -4,6 +4,7 @@ namespace Alcodo\PowerImage\Handler;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PowerImageBuilder
 {
@@ -41,33 +42,40 @@ class PowerImageBuilder
             return false;
         }
 
-        // check path has image extension
+        // check path has a image extension
         $ext = pathinfo($request->path(), PATHINFO_EXTENSION);
         if (!in_array($ext, $this->imageExtensions)) {
             Log::debug('powerimage: image extension not found: ' . $ext);
             return false;
         }
 
-        // check original image file
+        // check parameter to parse
         $parameterString = $this->getParameterString($request->path(), $ext);
         if (!$parameterString) {
             Log::debug('powerimage: no parameter found in string: ' . $request->path());
             return false;
         }
 
+        // check original image file exits
         $originalFilepath = $this->getOriginalFilepath($request->path(), $parameterString);
         if (!Storage::exists($originalFilepath)) {
             Log::debug('powerimage: original image file not exits, path: ' . $originalFilepath);
             return false;
         }
 
-        // Get convert params
+        // convert params
+        $params = ParamsHelper::parseToArray($parameterString);
 
-        // Convert image
+        // Convert
+        /** @var Api $glideApi */
+        $glideApi = app('GlideApi');
+        $resizedFileBinary = $glideApi->run($originalFilepath, $params);
+
+        // Save
+        Storage::put($request->path(), $resizedFileBinary);
 
         // Output the image
-
-        // TODO
+        return Storage::get($request->path());
     }
 
     /**
