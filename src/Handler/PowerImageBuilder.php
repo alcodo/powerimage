@@ -49,8 +49,14 @@ class PowerImageBuilder
         }
 
         // check original image file
-        $originalFilepath = $this->getOriginalFilepath($request->path());
-        if(! Storage::exists($originalFilepath)){
+        $parameterString = $this->getParameterString($request->path(), $ext);
+        if (!$parameterString) {
+            Log::debug('powerimage: no parameter found in string: ' . $request->path());
+            return false;
+        }
+
+        $originalFilepath = $this->getOriginalFilepath($request->path(), $parameterString);
+        if (!Storage::exists($originalFilepath)) {
             Log::debug('powerimage: original image file not exits, path: ' . $originalFilepath);
             return false;
         }
@@ -62,6 +68,45 @@ class PowerImageBuilder
         // Output the image
 
         // TODO
+    }
+
+    /**
+     * from:
+     * images/car_w:200,h:200.jpg
+     *
+     * to:
+     * w:200,h:200
+     *
+     * @param $path
+     * @param $fileextension
+     * @return bool
+     */
+    public function getParameterString($path, $fileextension)
+    {
+        preg_match('/_(.*?).' . $fileextension . '/', $path, $match);
+
+        if (!isset($match[1]) || empty($match[1])) {
+            return false;
+        }
+
+        return $match[1];
+    }
+
+    /**
+     * It converts path
+     *
+     * from:
+     * images/car_w:200,h:200.jpg
+     *
+     * to:
+     * images/car.jpg
+     *
+     * @param $path
+     * @return mixed
+     */
+    public function getOriginalFilepath($path, $parameter)
+    {
+        return str_replace($this->delimiter . $parameter, '', $path);
     }
 
 }
