@@ -2,6 +2,7 @@
 
 namespace Alcodo\PowerImage\Handler;
 
+use Alcodo\PowerImage\Events\ImageWasCreated;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -60,6 +61,7 @@ class PowerImageBuilder
         $originalFilepath = $this->getOriginalFilepath($request->path(), $parameterString);
         if (!Storage::exists($originalFilepath)) {
             Log::debug('powerimage: original image file not exits, path: ' . $originalFilepath);
+            Log::debug('powerimage: storage package check follow absolut file: ' . Storage::path($originalFilepath));
             return false;
         }
 
@@ -69,13 +71,19 @@ class PowerImageBuilder
         // Convert
         /** @var Api $glideApi */
         $glideApi = app('GlideApi');
-        $resizedFileBinary = $glideApi->run($originalFilepath, $params);
+        $resizedFileBinary = $glideApi->run(Storage::path($originalFilepath), $params);
 
         // Save
         Storage::put($request->path(), $resizedFileBinary);
+        if (!Storage::exists($request->path())) {
+            Log::debug('powerimage: image was not saved, binarycode length: ' . strlen($resizedFileBinary));
+            return false;
+        }
 
         // Output the image
-        return Storage::get($request->path());
+        event(new ImageWasCreated($request->url(), $request->path(), Storage::path($originalFilepath)));
+        header('Location:' . $request->url(), true, 301);
+        exit;
     }
 
     /**
