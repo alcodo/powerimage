@@ -51,7 +51,7 @@ class PowerImageBuilder
         }
 
         // check parameter to parse
-        $parameterString = $this->getParameterString($request->path(), $ext);
+        $parameterString = ParamsHelper::getParameterString($request->path(), $ext);
         if (!$parameterString) {
             Log::debug('powerimage: no parameter found in string: ' . $request->path());
             return false;
@@ -84,28 +84,6 @@ class PowerImageBuilder
         event(new ImageWasCreated($request->url(), $request->path(), Storage::path($originalFilepath)));
         header('Location:' . $request->url(), true, 301);
         exit;
-    }
-
-    /**
-     * from:
-     * images/car_w:200,h:200.jpg
-     *
-     * to:
-     * w:200,h:200
-     *
-     * @param $path
-     * @param $fileextension
-     * @return bool
-     */
-    public function getParameterString($path, $fileextension)
-    {
-        preg_match('/_(.*?).' . $fileextension . '/', $path, $match);
-
-        if (!isset($match[1]) || empty($match[1])) {
-            return false;
-        }
-
-        return $match[1];
     }
 
     /**

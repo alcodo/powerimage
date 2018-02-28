@@ -29,4 +29,26 @@ class ParamsHelper
 
         return $result;
     }
+
+    /**
+     * from:
+     * images/car_w=300&h=200.jpg
+     *
+     * to:
+     * w=300&h=200
+     *
+     * @param $path
+     * @param $fileextension
+     * @return bool
+     */
+    public static function getParameterString($path, $fileextension)
+    {
+        preg_match('/_(.*?).' . $fileextension . '/', $path, $match);
+
+        if (!isset($match[1]) || empty($match[1])) {
+            return false;
+        }
+
+        return $match[1];
+    }
 }

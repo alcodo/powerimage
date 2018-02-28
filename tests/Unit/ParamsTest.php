@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use Alcodo\PowerImage\Handler\ParamsHelper;
-use Alcodo\PowerImage\Handler\PowerImageBuilder;
 use Tests\UnitTest;
 
 class ParamsTest extends UnitTest
@@ -18,6 +17,16 @@ class ParamsTest extends UnitTest
             ],
             ParamsHelper::parseToArray('w=200&h=200')
         );
+    }
+
+    public function testGetParameterString()
+    {
+        $this->assertEquals(
+            'w=200&h=200',
+            ParamsHelper::getParameterString('images/car_w=200&h=200.jpg', 'jpg'));
+
+        $this->assertFalse(ParamsHelper::getParameterString('images/cow.jpg', 'jpg'));
+        $this->assertFalse(ParamsHelper::getParameterString('images/girl_.jpg', 'jpg'));
     }
 
 }
