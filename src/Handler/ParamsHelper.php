@@ -31,6 +31,21 @@ class ParamsHelper
     }
 
     /**
+     * @param array $params
+     * @return string
+     */
+    public static function parseToString(array $params): string
+    {
+        $result = [];
+
+        foreach ($params as $parameter => $value) {
+            $result[] = $parameter . '=' . $value;
+        }
+
+        return implode('&', $result);
+    }
+
+    /**
      * from:
      * images/car_w=300&h=200.jpg
      *

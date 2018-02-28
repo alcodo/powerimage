@@ -86,6 +86,14 @@ class PowerImageBuilder
         exit;
     }
 
+    public function path(string $path, array $params): string
+    {
+        $filename = pathinfo($path, PATHINFO_FILENAME);
+        $newFilename = $filename . $this->delimiter . ParamsHelper::parseToString($params);
+
+        return str_replace($filename, $newFilename, $path);
+    }
+
     /**
      * It converts path
      *

@@ -8,13 +8,13 @@ use Alcodo\PowerImage\Handler\PowerImageBuilder;
 
 class PowerImageServiceProvider extends Provider
 {
+
     /**
      * Register the service provider.
      * @return void
      */
     public function register()
     {
-//        $this->app->register('Approached\LaravelImageOptimizer\ServiceProvider');
     }
 
     public function boot()
@@ -29,14 +29,4 @@ class PowerImageServiceProvider extends Provider
             return new PowerImageBuilder();
         });
     }
-
-    /**
-     * Get the services provided by the provider.
-     *
-     * @return array
-     */
-//    public function provides()
-//    {
-//        return ['powerimage'];
-//    }
 }
