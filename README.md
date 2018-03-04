@@ -65,8 +65,11 @@ Create powerimage path helper:
 ```php
     powerimage('images/video.png', ['w' => 200, 'h' => 350]);
     
-    it returns:
+    // outut
     'images/video_w=200&h=350.png'
+    
+    // or direct in blade template
+    <img class="img-fluid" src="{{ powerimage(asset($image->filepath), ['w'=> 260, 'h' => 260])  }}" alt=""/>
 ```
 
 - [Parameter reference](http://glide.thephpleague.com/1.0/api/quick-reference/)
