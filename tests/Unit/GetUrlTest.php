@@ -11,8 +11,8 @@ class GetUrlTest extends UnitTest
     {
         $builder = new PowerImageBuilder();
         $this->assertEquals(
-            'images/video_w=200&h=350.png',
-            $builder->path('images/video.png', ['w' => 200, 'h' => 350])
+            'video/images/video_w=200&h=350.png',
+            $builder->path('video/images/video.png', ['w' => 200, 'h' => 350])
         );
     }
 }
