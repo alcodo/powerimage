@@ -7,7 +7,6 @@ use Tests\UnitTest;
 
 class GetUrlTest extends UnitTest
 {
-
     public function testGet()
     {
         $builder = new PowerImageBuilder();
@@ -16,5 +15,4 @@ class GetUrlTest extends UnitTest
             $builder->path('images/video.png', ['w' => 200, 'h' => 350])
         );
     }
-
 }

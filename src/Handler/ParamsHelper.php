@@ -15,6 +15,7 @@ class ParamsHelper
      * ['w' => 300, 'h' => 300, 'fit' => 'crop']
      *
      * @param $prefix
+     *
      * @return array
      */
     public static function parseToArray($parameterString)
@@ -32,6 +33,7 @@ class ParamsHelper
 
     /**
      * @param array $params
+     *
      * @return string
      */
     public static function parseToString(array $params): string
@@ -39,7 +41,7 @@ class ParamsHelper
         $result = [];
 
         foreach ($params as $parameter => $value) {
-            $result[] = $parameter . '=' . $value;
+            $result[] = $parameter.'='.$value;
         }
 
         return implode('&', $result);
@@ -47,18 +49,19 @@ class ParamsHelper
 
     /**
      * from:
-     * images/car_w=300&h=200.jpg
+     * images/car_w=300&h=200.jpg.
      *
      * to:
      * w=300&h=200
      *
      * @param $path
      * @param $fileextension
+     *
      * @return bool
      */
     public static function getParameterString($path, $fileextension)
     {
-        preg_match('/_(.*?).' . $fileextension . '/', $path, $match);
+        preg_match('/_(.*?).'.$fileextension.'/', $path, $match);
 
         if (!isset($match[1]) || empty($match[1])) {
             return false;

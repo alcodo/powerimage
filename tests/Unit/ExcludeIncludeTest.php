@@ -9,12 +9,12 @@ use Tests\UnitTest;
 class ExcludeIncludeTest extends UnitTest
 {
     /**
-     * @var \Illuminate\Http\Request $request
+     * @var \Illuminate\Http\Request
      */
     protected $request;
 
     /**
-     * @var \Alcodo\PowerImage\Handler\PowerImageBuilder $builder
+     * @var \Alcodo\PowerImage\Handler\PowerImageBuilder
      */
     protected $builder;
 
