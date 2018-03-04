@@ -7,7 +7,6 @@ use Tests\UnitTest;
 
 class PowerImageTest extends UnitTest
 {
-
     public function testGetOriginalFilepath()
     {
         $handler = new PowerImageBuilder();
@@ -16,5 +15,4 @@ class PowerImageTest extends UnitTest
             $handler->getOriginalFilepath('images/car_w=200&h=200.jpg', 'w=200&h=200')
         );
     }
-
 }

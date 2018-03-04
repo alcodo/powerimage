@@ -9,7 +9,6 @@ namespace Alcodo\PowerImage\Handler;
  */
 class ExceptionCheck
 {
-
     public static function check($path, $rules)
     {
         $patterns_quoted = preg_quote($rules, '/');
@@ -22,9 +21,8 @@ class ExceptionCheck
             '.*',
         ];
 
-        $regexpPatter = '/^(' . preg_replace($to_replace, $replacements, $patterns_quoted) . ')$/';
+        $regexpPatter = '/^('.preg_replace($to_replace, $replacements, $patterns_quoted).')$/';
 
-        return (bool)preg_match($regexpPatter, $path);
+        return (bool) preg_match($regexpPatter, $path);
     }
-
 }

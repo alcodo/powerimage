@@ -3,10 +3,11 @@
 use Alcodo\PowerImage\Facades\PowerImage;
 
 /**
- * It returns a powerimage storage path
+ * It returns a powerimage storage path.
  *
  * @param string $path
- * @param array $params
+ * @param array  $params
+ *
  * @return string
  */
 function powerimage(string $path, array $params): string

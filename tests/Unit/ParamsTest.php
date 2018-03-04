@@ -7,7 +7,6 @@ use Tests\UnitTest;
 
 class ParamsTest extends UnitTest
 {
-
     public function testParse()
     {
         $this->assertEquals(
@@ -28,5 +27,4 @@ class ParamsTest extends UnitTest
         $this->assertFalse(ParamsHelper::getParameterString('images/cow.jpg', 'jpg'));
         $this->assertFalse(ParamsHelper::getParameterString('images/girl_.jpg', 'jpg'));
     }
-
 }
