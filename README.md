@@ -32,6 +32,24 @@ Add powerimage handler in `app/Exceptions/Handler.php`:
         return parent::render($request, $exception);
     }
 ```
+
+And by the way you can inlcude or exclude paths that you want use powerimage example:
+```php
+    public function render($request, Exception $exception)
+    {
+        if(PowerImage::include($request, ['/images/*', '/gallery/*'])) {
+            PowerImage::check($request, $exception);
+        }
+        
+        // or
+        
+        if(PowerImage::exclude($request, ['/user/*'])) {
+            PowerImage::check($request, $exception);
+        }
+
+        return parent::render($request, $exception);
+    }
+```
 ## Helper
 
 Create powerimage path helper:

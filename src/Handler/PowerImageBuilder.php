@@ -86,6 +86,30 @@ class PowerImageBuilder
         exit;
     }
 
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param array $paths
+     */
+    public function include($request, array $paths)
+    {
+        foreach ($paths as $path) {
+            if (ExceptionCheck::check($request->getPathInfo(), $path)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param array $paths
+     */
+    public function exclude($request, array $paths)
+    {
+        return !$this->include($request, $paths);
+    }
+
     public function path(string $path, array $params): string
     {
         $filename = pathinfo($path, PATHINFO_FILENAME);
