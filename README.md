@@ -8,7 +8,7 @@
 <a href="https://packagist.org/alcodo/powerimage/framework"><img src="https://poser.pugx.org/alcodo/powerimage/license.svg" alt="License"></a>
 </p>
 
-Powerimage is a dynamic image handler for laravel. It uses the package [thephpleague/glide](https://github.com/thephpleague/glide) for convert the image. 
+Powerimage is a dynamic image handler for laravel. It uses the package [thephpleague/glide](https://github.com/thephpleague/glide) for *convert* and [spatie/image-optimizer](https://github.com/spatie/image-optimizer)  for *optimize* the image. 
 
 After the installation you can request any image that you have uploaded in laravel. Example:    
 ```example.com/images/cat.jpg``` (Original)     
