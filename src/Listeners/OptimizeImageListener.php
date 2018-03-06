@@ -2,7 +2,7 @@
 
 namespace Alcodo\PowerImage\Listeners;
 
-use Alcodo\PowerImage\Events\ImageWasCreated;
+use Alcodo\PowerImage\Events\PowerImageWasCreated;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class OptimizeImageListener
@@ -12,10 +12,10 @@ class OptimizeImageListener
      *
      * @param ImageWasCreated $event
      */
-    public function handle(ImageWasCreated $event)
+    public function handle(PowerImageWasCreated $event)
     {
         $optimizerChain = OptimizerChainFactory::create();
 
-        $optimizerChain->optimize($event->absolutPath);
+        $optimizerChain->optimize($event->convertedFilepathAbsoulte);
     }
 }

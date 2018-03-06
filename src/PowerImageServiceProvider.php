@@ -2,7 +2,7 @@
 
 namespace Alcodo\PowerImage;
 
-use Alcodo\PowerImage\Events\ImageWasCreated;
+use Alcodo\PowerImage\Events\PowerImageWasCreated;
 use Alcodo\PowerImage\Handler\PowerImageBuilder;
 use Alcodo\PowerImage\Listeners\OptimizeImageListener;
 use Illuminate\Support\Facades\Event;
@@ -15,7 +15,7 @@ class PowerImageServiceProvider extends Provider
      * @var array
      */
     protected $listen = [
-        ImageWasCreated::class => [
+        PowerImageWasCreated::class => [
             OptimizeImageListener::class,
         ],
     ];
