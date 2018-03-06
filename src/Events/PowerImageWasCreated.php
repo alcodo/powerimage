@@ -5,6 +5,7 @@ namespace Alcodo\PowerImage\Events;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Storage;
 
 class PowerImageWasCreated
 {
