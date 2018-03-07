@@ -3,8 +3,8 @@
 namespace Alcodo\PowerImage\Listeners;
 
 use Alcodo\PowerImage\Events\ResizedImageWasCreated;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Illuminate\Support\Facades\Storage;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class OptimizeImageListener
 {
