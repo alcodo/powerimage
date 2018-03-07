@@ -2,7 +2,7 @@
 
 namespace Alcodo\PowerImage\Handler;
 
-use Alcodo\PowerImage\Events\PowerImageWasCreated;
+use Alcodo\PowerImage\Events\ResizedImageWasCreated;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -88,7 +88,7 @@ class PowerImageBuilder
 
         // Output the image
         event(
-            new PowerImageWasCreated($request, $originalFilepath, $request->path())
+            new ResizedImageWasCreated($request, $originalFilepath, $request->path())
         );
         header('Location:' . $request->url(), true, 301);
         exit;
