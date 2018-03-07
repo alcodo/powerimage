@@ -90,7 +90,7 @@ class PowerImageBuilder
         event(
             new ResizedImageWasCreated($request, $originalFilepath, $request->path())
         );
-        header('Location:'.$request->url(), true, 301);
+        header('Location:'.$request->url(), true, 302);
         exit;
     }
 
