@@ -20,7 +20,6 @@ class PowerImageServiceProvider extends Provider
         ],
     ];
 
-
     /**
      * Register the service provider.
      *

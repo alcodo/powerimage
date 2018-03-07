@@ -22,7 +22,7 @@ class PowerImageBuilder
      * Check if powerimage can handle this image.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \Exception $exception
+     * @param \Exception               $exception
      *
      * @return \Illuminate\Http\Response
      */
@@ -40,7 +40,7 @@ class PowerImageBuilder
 
         // check path has delimiter
         if (strpos($request->path(), $this->delimiter) === false) {
-            Log::debug('powerimage: delimiter not found: ' . $this->delimiter);
+            Log::debug('powerimage: delimiter not found: '.$this->delimiter);
 
             return false;
         }
@@ -48,7 +48,7 @@ class PowerImageBuilder
         // check path has a image extension
         $ext = pathinfo($request->path(), PATHINFO_EXTENSION);
         if (!in_array($ext, $this->imageExtensions)) {
-            Log::debug('powerimage: image extension not found: ' . $ext);
+            Log::debug('powerimage: image extension not found: '.$ext);
 
             return false;
         }
@@ -56,7 +56,7 @@ class PowerImageBuilder
         // check parameter to parse
         $parameterString = ParamsHelper::getParameterString($request->path(), $ext);
         if (!$parameterString) {
-            Log::debug('powerimage: no parameter found in string: ' . $request->path());
+            Log::debug('powerimage: no parameter found in string: '.$request->path());
 
             return false;
         }
@@ -64,8 +64,8 @@ class PowerImageBuilder
         // check original image file exits
         $originalFilepath = $this->getOriginalFilepath($request->path(), $parameterString);
         if (!Storage::exists($originalFilepath)) {
-            Log::debug('powerimage: original image file not exits, path: ' . $originalFilepath);
-            Log::debug('powerimage: storage package check follow absolut file: ' . Storage::path($originalFilepath));
+            Log::debug('powerimage: original image file not exits, path: '.$originalFilepath);
+            Log::debug('powerimage: storage package check follow absolut file: '.Storage::path($originalFilepath));
 
             return false;
         }
@@ -81,7 +81,7 @@ class PowerImageBuilder
         // Save
         Storage::put($request->path(), $resizedFileBinary);
         if (!Storage::exists($request->path())) {
-            Log::debug('powerimage: image was not saved, binarycode length: ' . strlen($resizedFileBinary));
+            Log::debug('powerimage: image was not saved, binarycode length: '.strlen($resizedFileBinary));
 
             return false;
         }
@@ -90,13 +90,13 @@ class PowerImageBuilder
         event(
             new PowerImageWasCreated($request, $originalFilepath, $request->path())
         );
-        header('Location:' . $request->url(), true, 301);
+        header('Location:'.$request->url(), true, 301);
         exit;
     }
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param array $paths
+     * @param array                    $paths
      */
     public function include($request, array $paths)
     {
@@ -111,7 +111,7 @@ class PowerImageBuilder
 
     /**
      * @param \Illuminate\Http\Request $request
-     * @param array $paths
+     * @param array                    $paths
      */
     public function exclude($request, array $paths)
     {
@@ -122,10 +122,10 @@ class PowerImageBuilder
     {
         $filename = basename($path);
 
-        $newFilename = pathinfo($path, PATHINFO_FILENAME) .
-            $this->delimiter .
-            ParamsHelper::parseToString($params) .
-            '.' .
+        $newFilename = pathinfo($path, PATHINFO_FILENAME).
+            $this->delimiter.
+            ParamsHelper::parseToString($params).
+            '.'.
             pathinfo($path, PATHINFO_EXTENSION);
 
         return str_replace($filename, $newFilename, $path);
@@ -146,6 +146,6 @@ class PowerImageBuilder
      */
     public function getOriginalFilepath($path, $parameter)
     {
-        return str_replace($this->delimiter . $parameter, '', $path);
+        return str_replace($this->delimiter.$parameter, '', $path);
     }
 }
