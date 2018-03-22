@@ -69,7 +69,7 @@ Create powerimage path helper:
     'images/video_w=200&h=350.png'
     
     // or direct in blade template
-    <img class="img-fluid" src="{{ powerimage(asset($image->filepath), ['w'=> 260, 'h' => 260])  }}" alt=""/>
+    <img class="img-fluid" src="{{ powerimage(Storage::url($image->filepath), ['w'=> 260, 'h' => 260])  }}" alt=""/>
 ```
 
 - [Parameter reference](http://glide.thephpleague.com/1.0/api/quick-reference/)
