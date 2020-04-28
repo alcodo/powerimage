@@ -22,7 +22,7 @@
     "php" : ">=7.0",
     "illuminate/support": "^5.5|^5.8|^6.0|^7.0",
     "league/glide": "^1.3",
-    "spatie/image-optimizer": "1.0.*"
+    "spatie/image-optimizer": "^1.0"
   },
   "require-dev": {
     "phpunit/phpunit" : "^5.7|^8.0",
